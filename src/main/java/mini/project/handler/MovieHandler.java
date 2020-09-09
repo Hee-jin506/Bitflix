@@ -13,7 +13,7 @@ public class MovieHandler {
   public MovieHandler(List<Movie> movieList) {
     this.movieList = movieList;
   }
-  
+
   public void manage() {
     switch (Prompt.inputString("영화 추가\n영화 삭제\n영화 수정\n영화 조회\n입력>(빈문자열:취소) ")) {
       case "영화 추가":
@@ -40,12 +40,12 @@ public class MovieHandler {
 
     movieList.add(movie);
   }
-  
+
   public void add(String title) {
     Movie movie = findByTitle(title);
     if (movie == null) {
       return;
-    } 
+    }
     movieList.add(movie);
   }
 
@@ -118,7 +118,7 @@ public class MovieHandler {
   }
 
 
-  private int indexOf(String title) {
+  public int indexOf(String title) {
     for (int i = 0; i < movieList.size(); i++) {
       Movie movie = movieList.get(i);
       if (movie.getTitle().equals(title)) {
@@ -140,7 +140,7 @@ public class MovieHandler {
 
   // movieList를 조회순으로 정렬하는 메서드
   public Movie[] sortByViewCount() {
-    Movie[] bestArr = movieList.toArray(new Movie[]{});
+    Movie[] bestArr = movieList.toArray(new Movie[] {});
     for (int i = 0; i < bestArr.length; i++) {
       for (int j = 0; j < bestArr.length - i - 1; j++) {
         if (bestArr[j].getViewCount() < bestArr[j + 1].getViewCount()) {

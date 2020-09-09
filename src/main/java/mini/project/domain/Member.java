@@ -3,35 +3,52 @@ package mini.project.domain;
 import mini.project.handler.MovieHandler;
 import mini.project.util.ArrayList;
 import mini.project.util.List;
+import mini.project.util.Stack;
 
 public class Member {
-  
+
   private static final int FEMALE = 0;
   private static final int MALE = 1;
-  
+
   String name;
   int age;
   int gender;
   Genre favoriteGenre;
   List<Movie> toWatchList = new ArrayList<>();
   MovieHandler toWatchHandler = new MovieHandler(toWatchList);
-  
+  List<Movie> watchedList = new Stack<>();
+  MovieHandler watchedHandler = new MovieHandler(watchedList);
+
+
+
+  public MovieHandler getWatchedHandler() {
+    return watchedHandler;
+  }
+
+  public List<Movie> getWatchedList() {
+    return watchedList;
+  }
+
   public MovieHandler getToWatchHandler() {
     return toWatchHandler;
   }
-  
+
   public String getName() {
     return name;
   }
+
   public void setName(String name) {
     this.name = name;
   }
+
   public int getAge() {
     return age;
   }
+
   public void setAge(int age) {
     this.age = age;
   }
+
   public String getGender() {
     switch (gender) {
       case FEMALE:
@@ -40,6 +57,7 @@ public class Member {
         return "남성";
     }
   }
+
   public void setGender(String gender) {
     switch (gender) {
       case "여성":
@@ -50,12 +68,15 @@ public class Member {
         break;
     }
   }
+
   public Genre getFavoriteGenre() {
     return favoriteGenre;
   }
+
   public void setFavoriteGenre(Genre favoriteGenre) {
     this.favoriteGenre = favoriteGenre;
   }
+
   public List<Movie> getToWatchList() {
     return toWatchList;
   }

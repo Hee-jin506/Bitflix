@@ -6,16 +6,17 @@ import mini.project.domain.Movie;
 import mini.project.util.Iterator;
 import mini.project.util.List;
 import mini.project.util.Prompt;
+import mini.project.util.Screen;
 
 public class MemberHandler {
   List<Member> memberList;
   MovieHandler movieHandler;
-  
+
   public MemberHandler(List<Member> memberList, MovieHandler movieHandler) {
     this.memberList = memberList;
     this.movieHandler = movieHandler;
   }
-  
+
   public void manage() {
 
     switch (Prompt.inputString("회원 추가\n회원 삭제\n회원 수정\n회원 조회\n입력>(빈문자열:취소) ")) {
@@ -33,13 +34,14 @@ public class MemberHandler {
         break;
     }
   }
-//
-//  String name;
-//  int age;
-//  int gender;
-//  List<Movie> favoriteGenre;
-//  List<Movie> toWatchList;
-//  
+
+  //
+  // String name;
+  // int age;
+  // int gender;
+  // List<Movie> favoriteGenre;
+  // List<Movie> toWatchList;
+  //
   public void add() {
     System.out.println("[회원 등록]");
 
@@ -57,9 +59,9 @@ public class MemberHandler {
     }
     System.out.println("장르 : 로맨스, 액션, 가족, 호러");
     member.setFavoriteGenre(Prompt.inputGenre("좋아하는 장르? "));
-    
+
     System.out.println("보고싶은 영화");
-    
+
     while (true) {
       String str = Prompt.inputString("찾으시는 영화의 제목을 입력하세요.(빈문자열: 넘어가기)");
       if (str.length() == 0) {
@@ -71,7 +73,7 @@ public class MemberHandler {
       } else {
         member.getToWatchList().add(movie);
       }
-    }  
+    }
     memberList.add(member);
   }
 
@@ -79,23 +81,19 @@ public class MemberHandler {
     System.out.println("[회원 목록]");
 
     Iterator<Member> iterator = memberList.iterator();
-      while (iterator.hasNext()) {
-        Member member = iterator.next();
-        Iterator<Movie> movieIterator = member.getToWatchList().iterator();
-        StringBuilder movies = new StringBuilder();
-        while (movieIterator.hasNext()) {
-          Movie movie = movieIterator.next();
-          if (movies.length() > 0)
-            movies.append(",");
-          movies.append(movie.getTitle());
-        }
-        
-        System.out.printf("%d, %s, %s, %s\n",
-          member.getAge(),
-          member.getGender(),
-          member.getFavoriteGenre().toString(),
-          movies.toString()
-          );
+    while (iterator.hasNext()) {
+      Member member = iterator.next();
+      Iterator<Movie> movieIterator = member.getToWatchList().iterator();
+      StringBuilder movies = new StringBuilder();
+      while (movieIterator.hasNext()) {
+        Movie movie = movieIterator.next();
+        if (movies.length() > 0)
+          movies.append(",");
+        movies.append(movie.getTitle());
+      }
+
+      System.out.printf("%d, %s, %s, %s\n", member.getAge(), member.getGender(),
+          member.getFavoriteGenre().toString(), movies.toString());
     }
   }
 
@@ -109,14 +107,12 @@ public class MemberHandler {
       return;
     }
 
-    int age = Prompt.inputInt(
-        String.format("나이(%d)? ", member.getAge()));
-    String gender = Prompt.inputString(
-        String.format("성별(%s)? ", member.getGender()));
-    Genre newFavoriteGenre = Prompt.inputGenre(
-        String.format("취향 장르(%s)? ", member.getFavoriteGenre().toString()));
+    int age = Prompt.inputInt(String.format("나이(%d)? ", member.getAge()));
+    String gender = Prompt.inputString(String.format("성별(%s)? ", member.getGender()));
+    Genre newFavoriteGenre =
+        Prompt.inputGenre(String.format("취향 장르(%s)? ", member.getFavoriteGenre().toString()));
     // toWatchList 변경어떻게 할겨
-    
+
     String response = Prompt.inputString("정말 변경하시겠습니까?(y/N) ");
     if (!response.equalsIgnoreCase("y")) {
       System.out.println("회원 변경을 취소하였습니다.");
@@ -126,9 +122,9 @@ public class MemberHandler {
     member.setAge(age);
     member.setGender(gender);
     member.setFavoriteGenre(newFavoriteGenre);
-    
+
     // toWatchList 어떻게 할겨
-    
+
     System.out.println("회원 변경하였습니다.");
   }
 
@@ -153,9 +149,9 @@ public class MemberHandler {
 
   }
 
-//  public void watch() {
-//
-//  }
+  // public void watch() {
+  //
+  // }
 
   Member findByName(String name) {
     for (int i = 0; i < memberList.size(); i++) {
@@ -182,7 +178,64 @@ public class MemberHandler {
     member.getToWatchHandler().list();
   }
 
-//  public void printHistory() {
-//
-//  }
+  public void printHistory() throws InterruptedException {
+    Member member = findByName(Prompt.inputString("이름? "));
+    member.getWatchedHandler().list();
+  }
+
+  public void watch(MovieHandler movieHandler) throws InterruptedException {
+    Member member = findByName(Prompt.inputString("이름? "));
+    Movie movie;
+
+    while (true) {
+      movie = movieHandler.findByTitle(Prompt.inputString("무슨 영화를 보시겠습니까 ? "));
+      if (movie == null) {
+        System.out.println("해당 제목의 영화를 찾지 못하였습니다.\n 다시 입력해주세요.");
+      } else {
+        break;
+      }
+    }
+    Screen.getWatchScreen();
+    System.out.print("영화가 시작합니다");
+    for (int i = 0; i < 4; i++) {
+      Thread.sleep(500);
+      System.out.print(".");
+    }
+    System.out.println();
+
+
+    System.out.print("영화를 보는 중");
+
+
+    Screen.getMovieScreen(movie.getGenre());
+
+
+    for (int i = 0; i < 5; i++) {
+      Thread.sleep(500);
+      System.out.print(".");
+    }
+    System.out.println();
+
+    System.out.println("영화가 끝납니다..");
+
+    if (member.getToWatchHandler().findByTitle(movie.getTitle()) != null) {
+      member.getToWatchList().remove(member.getToWatchHandler().indexOf(movie.getTitle()));
+    }
+
+    movie.setViewCount(movie.getViewCount() + 1);
+
+    member.getWatchedList().add(movie);
+
+  }
+
+
+
+  // 1) 여태 시청한 영화 개수 대비 장르를 계산해서 가장 비중이 높은 장르를 favorite으로 정한다.
+
+  // 2) if (보고싶어요에 있는 영화면)
+
+  // 3) 보고싶어요 리스트에 영화 삭제
+
+  // 4) 영화 조회수 올리기
+
 }
