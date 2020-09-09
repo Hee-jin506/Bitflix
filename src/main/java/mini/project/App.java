@@ -9,11 +9,6 @@ public class App {
   }
 
   public static void main(String[] args) {
-    System.out.println(getGreeting());
-    System.out.println("  ,--./,-.");
-    System.out.println(" / #      \\");
-    System.out.println("|          |");
-    System.out.println(" \\        / ");
-    System.out.println("  `._,._,'");
+    System.out.println("안녕~후훗");
   }
 }
