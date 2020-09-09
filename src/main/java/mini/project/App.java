@@ -15,5 +15,6 @@ public class App {
     System.out.println("|          |");
     System.out.println(" \\        / ");
     System.out.println("  `._,._,'");
+    System.out.println("에러가 나는지요");
   }
 }
