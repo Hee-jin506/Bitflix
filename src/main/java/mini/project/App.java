@@ -5,12 +5,13 @@ package mini.project;
 
 public class App {
   public static String getGreeting() {
-    return "Hello apple.";
+    return "wow~~!";
   }
 
   public static void main(String[] args) {
     System.out.println("dsfjhsdkhfkj");
     System.out.println("sdajfhdskhfl");
     System.out.println("ejirjeijfdks");
+    System.out.println("맛점하세요~");
   }
 }
