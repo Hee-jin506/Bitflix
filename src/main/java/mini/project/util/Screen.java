@@ -1,18 +1,42 @@
 package mini.project.util;
 
 import mini.project.domain.Genre;
+import mini.project.domain.Movie;
 
 public class Screen {
-  void getMainScreen() {
+
+  public static void beforeSignUp() {
+    logo("BITFLIX");
 
   }
 
-  public static void BeforeSignUpScreen() {
+  public static void afterSignUp() {
 
   }
+  
+  public static void viewMovies(Movie[] movies) {
 
-  public static void AfterSignUpScreen() {
-
+    for (int i = 0; i < movies.length; i++) {
+      if (i % 10 == 0 && i != 0) {
+        if (!Prompt.inputString("더 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
+          break;
+        }
+      }
+      System.out.printf("%10s\t%d. %s\n","",i + 1, movies[i].getTitle());
+    }
+  }
+  
+  public static void menu() {
+    
+  }
+  
+  public static void logo(String logo) {
+    System.out.printf("\n\n%10s*************************************************************\n","");
+    System.out.printf("%10s*%59s*\n","","");
+    System.out.printf("%10s*-----------------!! %-20s !!----------------*\n","", logo);
+    System.out.printf("%10s*%59s*\n","","");
+    System.out.printf(
+    "%10s*************************************************************\n","");
   }
 
   public static void getHorrorScreen() throws InterruptedException {
@@ -138,3 +162,4 @@ public class Screen {
     }
   }
 }
+

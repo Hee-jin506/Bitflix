@@ -42,7 +42,7 @@ public class MemberHandler {
   // List<Movie> favoriteGenre;
   // List<Movie> toWatchList;
   //
-  public void add() {
+  public Member add() {
     System.out.println("[회원 등록]");
 
     Member member = new Member();
@@ -75,6 +75,7 @@ public class MemberHandler {
       }
     }
     memberList.add(member);
+    return member;
   }
 
   public void list() {
@@ -175,11 +176,13 @@ public class MemberHandler {
 
   public void printToWatchList() {
     Member member = findByName(Prompt.inputString("이름? "));
+    Screen.logo("To Watch List");
     member.getToWatchHandler().list();
   }
 
   public void printHistory() throws InterruptedException {
     Member member = findByName(Prompt.inputString("이름? "));
+    Screen.logo("HISTORY");
     member.getWatchedHandler().list();
   }
 
@@ -227,15 +230,4 @@ public class MemberHandler {
     member.getWatchedList().add(movie);
 
   }
-
-
-
-  // 1) 여태 시청한 영화 개수 대비 장르를 계산해서 가장 비중이 높은 장르를 favorite으로 정한다.
-
-  // 2) if (보고싶어요에 있는 영화면)
-
-  // 3) 보고싶어요 리스트에 영화 삭제
-
-  // 4) 영화 조회수 올리기
-
 }

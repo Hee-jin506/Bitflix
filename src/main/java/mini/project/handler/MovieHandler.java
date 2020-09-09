@@ -1,11 +1,13 @@
 package mini.project.handler;
 
+
 import mini.project.domain.Genre;
 import mini.project.domain.Movie;
 import mini.project.util.ArrayList;
 import mini.project.util.Iterator;
 import mini.project.util.List;
 import mini.project.util.Prompt;
+import mini.project.util.Screen;
 
 public class MovieHandler {
   List<Movie> movieList;
@@ -50,14 +52,20 @@ public class MovieHandler {
   }
 
   public void list() {
-    System.out.println("[영화 목록]");
-
+//    System.out.println("[영화 목록]");
+    Movie[] movies;
+    movies = new Movie[movieList.size()];
     Iterator<Movie> iterator = movieList.iterator();
+    for (int i = 0; iterator.hasNext(); i++) {
+      movies[i] = iterator.next();
+      }
+    Screen.viewMovies(movies);
 
-    while (iterator.hasNext()) {
-      Movie movie = iterator.next();
-      System.out.printf("%s, %s, %s\n", movie.getTitle(), movie.getGenre(), movie.getViewCount());
-    }
+//    Iterator<Movie> iterator = movieList.iterator();
+//    while (iterator.hasNext()) {
+//      Movie movie = iterator.next();
+//      System.out.printf("%s, %s, %s\n", movie.getTitle(), movie.getGenre(), movie.getViewCount());
+//    }
 
   }
 
@@ -130,12 +138,28 @@ public class MovieHandler {
 
 
   public void printGenre(Genre genre) {
-    System.out.println("[장르 목록]");
-    Iterator<Movie> iterator = findByGenre(genre).iterator();
-    while (iterator.hasNext()) {
-      Movie movie = iterator.next();
-      System.out.printf("%s, %s\n", movie.getTitle(), movie.getGenre().toString());
+    switch (genre) {
+      case 액션:
+        Screen.logo("ACTION");
+        break;
+      case 가족:
+        Screen.logo("FAMILY");
+        break;
+      case 호러:
+        Screen.logo("Horror");
+        break;
+      case 로맨스:
+        Screen.logo("Romance");
+        break;
     }
+    Movie[] movies = findByGenre(genre).toArray(new Movie[] {});
+    Screen.viewMovies(movies);
+//    Iterator<Movie> iterator = findByGenre(genre).iterator();
+//    while (iterator.hasNext()) {
+//      Movie movie = iterator.next();
+//      
+//      System.out.printf("%s, %s\n", movie.getTitle(), movie.getGenre().toString());
+//    }
   }
 
   // movieList를 조회순으로 정렬하는 메서드
@@ -154,10 +178,11 @@ public class MovieHandler {
   }
 
   public void printBest() {
-    System.out.println("[인기순 목록]");
     Movie[] movies = sortByViewCount();
-    for (Movie movie : movies) {
-      System.out.printf("%s, %s\n", movie.getTitle(), movie.getGenre());
-    }
+    Screen.logo("Top 10");
+    Screen.viewMovies(movies);
+//    for (Movie movie : movies) {
+//      System.out.printf("%s, %s\n", movie.getTitle(), movie.getGenre());
+//    }
   }
 }
