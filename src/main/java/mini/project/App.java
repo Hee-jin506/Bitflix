@@ -19,7 +19,11 @@ public class App {
   // 회원가입 권유
   // Screen.AfterSignUpScereen()
   // 메뉴처리(MemberHandler, MovieHandler)
-
+  static final int BEFORE_LOGIN_PAGE = 0;
+  static final int MANAGER_PAGE = 1;
+  static final int AFTER_LOGIN_PAGE = 2;
+  static final int MEMBER_MANAGE_PAGE = 3;
+  static final int MOVIE_MANAGE_PAGE = 4;
 
 
   public static void main(String[] args) throws InterruptedException {
@@ -27,7 +31,9 @@ public class App {
     MovieHandler movieHandler = new MovieHandler(movieList);
     List<Member> memberList = new ArrayList<>();
     MemberHandler memberHandler = new MemberHandler(memberList, movieHandler);
-    Member logedInMember = null;
+
+    // 로그인한 사용자
+    Member loggedInMember = null;
 
 
 
@@ -49,101 +55,110 @@ public class App {
       movieList.add(movie);
     }
 
-    Screen.bitflixLogo();
-    movieHandler.printBest();
-    Screen.menu();
+   
 
     /*
-     * if (Prompt.inputString("회원가입하시겠습니까?(y/N)").equalsIgnoreCase("y")) { logedInMember =
+     * if (Prompt.inputString("회원가입하시겠습니까?(y/N)").equalsIgnoreCase("y")) { loggedInMember =
      * memberHandler.add(); } else { System.out.println("프로그램을 종료합니다."); return; }
      */
 
     loop: while (true) {
 
-      String command = Prompt.inputString("명령> ");
-
       // 사용자가 입력한 명령을 보관한다.
-      if (logedInMember == null) {
-        switch (command) {
+      if (loggedInMember == null) {
+        Screen.bitflixLogo();
+        movieHandler.printBest();
+        Screen.viewMenu(BEFORE_LOGIN_PAGE);
+        switch (Prompt.inputString("명령> ")) {
           case "회원가입":
             memberHandler.add();
             break;
           case "로그인":
-            logedInMember = memberHandler.findByName(Prompt.inputString("이름을 입력하세요."));
+            loggedInMember = memberHandler.findByID(Prompt.inputString("아이디를 입력하세요."));
+            break;
+          case "관리자":
+            Screen.viewMenu(MANAGER_PAGE);
+            switch (Prompt.inputString("명령> ")) {
+              case "회원관리":
+                Screen.viewMenu(MEMBER_MANAGE_PAGE);
+                memberHandler.manage();
+                break;
+              case "영화관리":
+                Screen.viewMenu(MOVIE_MANAGE_PAGE);
+                movieHandler.manage();
+                break;
+              case "종료":
+                System.out.println("프로그램을 종료합니다.");
+                return;
+              default:
+                System.out.println("잘못된 명령입니다.");
+            }
             break;
           case "종료":
             System.out.println("프로그램을 종료합니다.");
             break loop;
           default:
+            System.out.println("잘못된 명령입니다.");
 
         }
       }
-      if (logedInMember != null) {
-        command = Prompt.inputString("명령> ");
-        if (logedInMember.getName().equals("관리자")) {
-          switch (command) {
-            case "회원관리":
-              memberHandler.manage();
-              break;
-            case "영화관리":
-              movieHandler.manage();
-              break;
-            case "종료":
-              System.out.println("프로그램을 종료합니다.");
-              break loop;
-          }
-        } else {
-          while (true) {
-            command = Prompt.inputString("명령> ");
-            switch (command) {
-              case "로그아웃":
-                if (Prompt.inputString("정말 로그아웃 하시겠습니까?(y/N)").equalsIgnoreCase("y"))
-                  logedInMember = null;
-                break;
-                
-              case "영화시청":
-                memberHandler.watch(movieHandler);
-                break;
-              case "보고싶어요":
-                memberHandler.printToWatchList();
-                if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
-                  memberHandler.watch(movieHandler);
-                }
-                break;
-              case "장르별 더보기":
-                movieHandler.printGenre(Prompt.inputGenre("로맨스, 액션, 가족, 호러\n장르? "));
-                if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
-                  memberHandler.watch(movieHandler);
-                }
-                break;
-              case "인기순 더보기":
-                movieHandler.printBest();
-                if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
-                  memberHandler.watch(movieHandler);
-                }
-                break;
-              case "다시보기":
-                memberHandler.printHistory();
-                if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
-                  memberHandler.watch(movieHandler);
-                }
-                break;
-              case "종료":
-                System.out.println("프로그램을 종료합니다.");
-                break loop;
+      if (loggedInMember != null) {
+
+        Screen.bitflixLogo();
+        movieHandler.printGenre(loggedInMember.getFavoriteGenre());
+        movieHandler.printBest();
+        Screen.viewMenu(AFTER_LOGIN_PAGE);
+
+        switch (Prompt.inputString("명령> ")) {
+          case "로그아웃":
+            if (Prompt.inputString("정말 로그아웃 하시겠습니까?(y/N)").equalsIgnoreCase("y"))
+              loggedInMember = null;
+            break;
+
+          case "영화시청":
+            memberHandler.watch(movieHandler, loggedInMember);
+            break;
+          case "보고싶어요":
+            memberHandler.printToWatchList(loggedInMember);
+            if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
+              memberHandler.watch(movieHandler, loggedInMember);
             }
-          }
+            break;
+          case "장르별 더보기":
+            movieHandler.printGenre(Prompt.inputGenre("로맨스, 액션, 가족, 호러\n장르? "));
+            if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
+              memberHandler.watch(movieHandler, loggedInMember);
+            }
+            break;
+          case "인기순 더보기":
+            movieHandler.printBest();
+            if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
+              memberHandler.watch(movieHandler, loggedInMember);
+            }
+            break;
+          case "다시보기":
+            memberHandler.printHistory(loggedInMember);
+            if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
+              memberHandler.watch(movieHandler, loggedInMember);
+            }
+            break;
+          case "종료":
+            System.out.println("프로그램을 종료합니다.");
+            break loop;
+          default:
+            System.out.println("잘못된 명령입니다.");
         }
+
       }
     }
-
-
-    /*
-     *
-     * System.out.println("실행할 수 없는 명령입니다.");
-     */
   }
-  // System.out.println(); // 이전 명령의 실행을 구분하기 위해 빈 줄 출력
+
+
+  /*
+   *
+   * System.out.println("실행할 수 없는 명령입니다.");
+   */
 }
+// System.out.println(); // 이전 명령의 실행을 구분하기 위해 빈 줄 출력
 
 

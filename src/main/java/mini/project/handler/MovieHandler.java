@@ -17,7 +17,7 @@ public class MovieHandler {
   }
 
   public void manage() {
-    switch (Prompt.inputString("영화 추가\n영화 삭제\n영화 수정\n영화 조회\n입력>(빈문자열:취소) ")) {
+    switch (Prompt.inputString("입력>(빈문자열:취소) ")) {
       case "영화 추가":
         add();
         break;

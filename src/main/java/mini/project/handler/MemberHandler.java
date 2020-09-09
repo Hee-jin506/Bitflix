@@ -19,7 +19,8 @@ public class MemberHandler {
 
   public void manage() {
 
-    switch (Prompt.inputString("회원 추가\n회원 삭제\n회원 수정\n회원 조회\n입력>(빈문자열:취소) ")) {
+    
+    switch (Prompt.inputString("입력>(빈문자열:취소) ")) {
       case "회원 추가":
         add();
         break;
@@ -47,16 +48,8 @@ public class MemberHandler {
 
     Member member = new Member();
     member.setName(Prompt.inputString("이름? "));
-    member.setAge(Prompt.inputInt("나이? "));
-    while (true) {
-      String gender = Prompt.inputString("성별? ");
-      if (gender.equals("여성") || gender.equals("남성")) {
-        member.setGender(gender);
-        break;
-      } else {
-        System.out.println("잘못 입력하셨습니다. 다시 입력해주세요.");
-      }
-    }
+    member.setID(Prompt.inputString("아이디? "));
+    member.setPassword(Prompt.inputString("비밀번호? "));
     System.out.println("장르 : 로맨스, 액션, 가족, 호러");
     member.setFavoriteGenre(Prompt.inputGenre("좋아하는 장르? "));
 
@@ -93,23 +86,22 @@ public class MemberHandler {
         movies.append(movie.getTitle());
       }
 
-      System.out.printf("%d, %s, %s, %s\n", member.getAge(), member.getGender(),
+      System.out.printf("%s, %s, %s, %s\n", member.getName(), member.getID(),
           member.getFavoriteGenre().toString(), movies.toString());
     }
   }
 
   public void update() {
     System.out.println("[회원 변경]");
-    String name = Prompt.inputString("이름? ");
-    Member member = findByName(name);
+    String ID = Prompt.inputString("아이디? ");
+    Member member = findByID(ID);
 
     if (member == null) {
-      System.out.println("해당 번호의 회원이 없습니다.");
+      System.out.println("해당 아이디의 회원이 없습니다.");
       return;
     }
-
-    int age = Prompt.inputInt(String.format("나이(%d)? ", member.getAge()));
-    String gender = Prompt.inputString(String.format("성별(%s)? ", member.getGender()));
+    String name = Prompt.inputString(String.format("이름(%s)? ", member.getName()));
+    String password = Prompt.inputString(String.format("비밀번호(%s)? ", member.getPassword()));
     Genre newFavoriteGenre =
         Prompt.inputGenre(String.format("취향 장르(%s)? ", member.getFavoriteGenre().toString()));
     // toWatchList 변경어떻게 할겨
@@ -120,8 +112,8 @@ public class MemberHandler {
       return;
     }
 
-    member.setAge(age);
-    member.setGender(gender);
+    member.setName(name);
+    member.setPassword(password);
     member.setFavoriteGenre(newFavoriteGenre);
 
     // toWatchList 어떻게 할겨
@@ -131,11 +123,11 @@ public class MemberHandler {
 
   public void delete() {
     System.out.println("[회원 삭제]");
-    String name = Prompt.inputString("이름? ");
-    int index = indexOf(name);
+    String ID = Prompt.inputString("아이디? ");
+    int index = indexOf(ID);
 
     if (index == -1) {
-      System.out.println("해당 이름의 회원이 없습니다.");
+      System.out.println("해당 아이디의 회원이 없습니다.");
       return;
     }
 
@@ -150,44 +142,40 @@ public class MemberHandler {
 
   }
 
-  // public void watch() {
-  //
-  // }
-
-  public Member findByName(String name) {
+  public Member findByID(String ID) {
     for (int i = 0; i < memberList.size(); i++) {
       Member member = memberList.get(i);
-      if (member.getName().equals(name)) {
+      if (member.getID().equals(ID)) {
         return member;
       }
     }
     return null;
   }
 
-  int indexOf(String name) {
+  int indexOf(String ID) {
     for (int i = 0; i < memberList.size(); i++) {
       Member member = memberList.get(i);
-      if (member.getName().equals(name)) {
+      if (member.getID().equals(ID)) {
         return i;
       }
     }
     return -1;
   }
 
-  public void printToWatchList() {
-    Member member = findByName(Prompt.inputString("이름? "));
+
+
+  //
+  public void printToWatchList(Member member) {
     Screen.logo("To Watch List");
     member.getToWatchHandler().list();
   }
 
-  public void printHistory() throws InterruptedException {
-    Member member = findByName(Prompt.inputString("이름? "));
+  public void printHistory(Member member) throws InterruptedException {
     Screen.logo("HISTORY");
     member.getWatchedHandler().list();
   }
 
-  public void watch(MovieHandler movieHandler) throws InterruptedException {
-    Member member = findByName(Prompt.inputString("이름? "));
+  public void watch(MovieHandler movieHandler, Member member) throws InterruptedException {
     Movie movie;
 
     while (true) {
@@ -229,11 +217,10 @@ public class MemberHandler {
 
     member.getWatchedList().add(movie);
 
-    generateFavoriteGenre();
+    generateFavoriteGenre(member);
   }
 
-  public void generateFavoriteGenre() {
-    Member member = findByName(Prompt.inputString("이름? "));
+  public void generateFavoriteGenre(Member member) {
     int[] genreCount = new int[4];
     for (int i = 0; i < member.getWatchedList().size(); i++) {
       switch (member.getWatchedList().get(i).getGenre()) {

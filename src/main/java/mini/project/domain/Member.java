@@ -11,8 +11,8 @@ public class Member {
   private static final int MALE = 1;
 
   String name;
-  int age;
-  int gender;
+  String ID;
+  String password;
   Genre favoriteGenre;
   List<Movie> toWatchList = new ArrayList<>();
   MovieHandler toWatchHandler = new MovieHandler(toWatchList);
@@ -40,34 +40,23 @@ public class Member {
   public void setName(String name) {
     this.name = name;
   }
-
-  public int getAge() {
-    return age;
+  
+  public String getID() {
+    return ID;
   }
 
-  public void setAge(int age) {
-    this.age = age;
+  public void setID(String ID) {
+    this.ID = ID;
   }
 
-  public String getGender() {
-    switch (gender) {
-      case FEMALE:
-        return "여성";
-      default:
-        return "남성";
-    }
+  public String getPassword() {
+    return password;
   }
 
-  public void setGender(String gender) {
-    switch (gender) {
-      case "여성":
-        this.gender = FEMALE;
-        break;
-      case "남성":
-        this.gender = MALE;
-        break;
-    }
+  public void setPassword(String password) {
+    this.password = password;
   }
+  
 
   public Genre getFavoriteGenre() {
     return favoriteGenre;
