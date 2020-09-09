@@ -3,15 +3,72 @@
  */
 package mini.project;
 
+import mini.project.handler.MemberHandler;
+import mini.project.handler.MovieHandler;
+import mini.project.util.Prompt;
+import mini.project.util.Screen;
+
 public class App {
-  public static String getGreeting() {
-    return "wow~~!";
-  }
+  // Screen.BeforeSignUpScreen()
+  // 회원가입 권유
+  // Screen.AfterSignUpScereen()
+  // 메뉴처리(MemberHandler, MovieHandler)
+
 
   public static void main(String[] args) {
-    System.out.println("dsfjhsdkhfkj");
-    System.out.println("sdajfhdskhfl");
-    System.out.println("ejirjeijfdks");
-    System.out.println("맛점하세요~");
+    MemberHandler memberHandler = new MemberHandler();
+    MovieHandler movieHandler = new MovieHandler();
+
+    Screen.BeforeSignUpScreen();
+    if (Prompt.inputString("회원가입하시겠습니까?(y/N)").equalsIgnoreCase("y")) {
+      memberHandler.add();
+    } else {
+      System.out.println("프로그램을 종료합니다.");
+      return;
+    }
+
+
+    loop: while (true) {
+      Screen.AfterSignUpScreen();
+      String command = Prompt.inputString("명령> ");
+
+      // 사용자가 입력한 명령을 보관한다.
+
+      switch (command) {
+        case "회원가입":
+          memberHandler.add();
+          break;
+        case "영화시청":
+          memberHandler.watch();
+          break;
+        case "보고싶어요":
+          memberHandler.printToWatchList();
+          break;
+        case "장르별 더보기":
+          movieHandler.printGenre();
+          break;
+        case "인기순 더보기":
+          movieHandler.printBest();
+          break;
+        case "다시보기":
+          memberHandler.printHistory();
+          break;
+        case "회원관리":
+          memberHandler.manage();
+          break;
+        case "영화관리":
+          movieHandler.manage();
+          break;
+
+
+        case "종료":
+          System.out.println("안녕!");
+          break loop;
+        default:
+          System.out.println("실행할 수 없는 명령입니다.");
+      }
+      System.out.println(); // 이전 명령의 실행을 구분하기 위해 빈 줄 출력
+    }
+
   }
 }
