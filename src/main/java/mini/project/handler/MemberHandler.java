@@ -225,9 +225,48 @@ public class MemberHandler {
     movie.setViewCount(movie.getViewCount() + 1);
 
     member.getWatchedList().add(movie);
-
   }
 
+  public void generateFavoriteGenre() {
+    Member member = findByName(Prompt.inputString("이름? "));
+    int[] genreCount = new int[4];
+    for (int i = 0; i < member.getWatchedList().size(); i++) {
+      switch (member.getWatchedList().get(i).getGenre()) {
+        case 로맨스:
+          genreCount[0]++;
+          break;
+        case 액션:
+          genreCount[1]++;
+          break;
+        case 호러:
+          genreCount[2]++;
+          break;
+        case 가족:
+          genreCount[3]++;
+      }
+    }
+    int index = 0;
+    int max = genreCount[0];
+    for (int i = 0; i < genreCount.length; i++) {
+      if (genreCount[i] > max) {
+        max = genreCount[i];
+        index = i;
+      }
+    }
+    switch (index) {
+      case 0:
+        member.setFavoriteGenre(Genre.로맨스);
+        break;
+      case 1:
+        member.setFavoriteGenre(Genre.액션);
+        break;
+      case 2:
+        member.setFavoriteGenre(Genre.호러);
+        break;
+      case 3:
+        member.setFavoriteGenre(Genre.가족);
+    }
+  }
 
 
   // 1) 여태 시청한 영화 개수 대비 장르를 계산해서 가장 비중이 높은 장르를 favorite으로 정한다.
