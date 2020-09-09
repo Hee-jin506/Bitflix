@@ -5,6 +5,15 @@ public class Movie {
   private Genre genre;
   private int viewCount;
 
+  public Movie(String title, Genre genre) {
+    this.title = title;
+    this.genre = genre;
+  }
+
+  public Movie() {
+    
+  }
+
   public String getTitle() {
     return title;
   }

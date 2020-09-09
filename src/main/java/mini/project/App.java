@@ -3,10 +3,16 @@
  */
 package mini.project;
 
+import mini.project.domain.Genre;
+import mini.project.domain.Member;
+import mini.project.domain.Movie;
 import mini.project.handler.MemberHandler;
 import mini.project.handler.MovieHandler;
+import mini.project.util.ArrayList;
+import mini.project.util.List;
 import mini.project.util.Prompt;
 import mini.project.util.Screen;
+
 
 public class App {
   // Screen.BeforeSignUpScreen()
@@ -16,8 +22,28 @@ public class App {
 
 
   public static void main(String[] args) {
-    MemberHandler memberHandler = new MemberHandler();
-    MovieHandler movieHandler = new MovieHandler();
+    List<Movie> movieList = new ArrayList<>();
+    for (int i = 0; i < 20; i++) {
+      Movie movie;
+      if (i < 5) {
+        movie = new Movie(String.format("%d", i), Genre.로맨스); 
+        movie.setViewCount(1);
+      } else if (i < 10) {
+        movie = new Movie(String.format("%d", i), Genre.액션);  
+        movie.setViewCount(2);
+      } else if (i < 15) {
+        movie = new Movie(String.format("%d", i), Genre.호러);
+        movie.setViewCount(3);
+      } else {
+        movie = new Movie(String.format("%d", i), Genre.가족);
+        movie.setViewCount(4);
+      }
+      movieList.add(movie);
+    }
+    MovieHandler movieHandler = new MovieHandler(movieList);
+    List<Member> memberList = new ArrayList<>();
+    MemberHandler memberHandler = new MemberHandler(memberList, movieHandler);
+
 
     Screen.BeforeSignUpScreen();
     if (Prompt.inputString("회원가입하시겠습니까?(y/N)").equalsIgnoreCase("y")) {
@@ -39,19 +65,20 @@ public class App {
           memberHandler.add();
           break;
         case "영화시청":
-          memberHandler.watch();
+          // memberHandler.watch();
           break;
         case "보고싶어요":
+          
           memberHandler.printToWatchList();
           break;
         case "장르별 더보기":
-          movieHandler.printGenre();
+          movieHandler.printGenre(Prompt.inputGenre("로맨스, 액션, 가족, 호러\n장르? "));
           break;
         case "인기순 더보기":
           movieHandler.printBest();
           break;
         case "다시보기":
-          memberHandler.printHistory();
+          // memberHandler.printHistory();
           break;
         case "회원관리":
           memberHandler.manage();

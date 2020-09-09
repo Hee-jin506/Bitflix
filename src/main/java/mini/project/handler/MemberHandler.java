@@ -1,14 +1,21 @@
 package mini.project.handler;
 
+import mini.project.domain.Genre;
 import mini.project.domain.Member;
-import mini.project.util.ArrayList;
+import mini.project.domain.Movie;
 import mini.project.util.Iterator;
 import mini.project.util.List;
 import mini.project.util.Prompt;
 
 public class MemberHandler {
-  static List<Member> memberList = new ArrayList<>();
-
+  List<Member> memberList;
+  MovieHandler movieHandler;
+  
+  public MemberHandler(List<Member> memberList, MovieHandler movieHandler) {
+    this.memberList = memberList;
+    this.movieHandler = movieHandler;
+  }
+  
   public void manage() {
 
     switch (Prompt.inputString("회원 추가\n회원 삭제\n회원 수정\n회원 조회\n입력>(빈문자열:취소) ")) {
@@ -37,6 +44,7 @@ public class MemberHandler {
     System.out.println("[회원 등록]");
 
     Member member = new Member();
+    member.setName(Prompt.inputString("이름? "));
     member.setAge(Prompt.inputInt("나이? "));
     while (true) {
       String gender = Prompt.inputString("성별? ");
@@ -47,7 +55,23 @@ public class MemberHandler {
         System.out.println("잘못 입력하셨습니다. 다시 입력해주세요.");
       }
     }
-    member.setToWatchList();
+    System.out.println("장르 : 로맨스, 액션, 가족, 호러");
+    member.setFavoriteGenre(Prompt.inputGenre("좋아하는 장르? "));
+    
+    System.out.println("보고싶은 영화");
+    
+    while (true) {
+      String str = Prompt.inputString("찾으시는 영화의 제목을 입력하세요.(빈문자열: 넘어가기)");
+      if (str.length() == 0) {
+        break;
+      }
+      Movie movie = movieHandler.findByTitle(str);
+      if (movie == null) {
+        System.out.println("찾으시는 영화가 없습니다. 다시 입력해주세요.");
+      } else {
+        member.getToWatchList().add(movie);
+      }
+    }  
     memberList.add(member);
   }
 
@@ -57,11 +81,20 @@ public class MemberHandler {
     Iterator<Member> iterator = memberList.iterator();
       while (iterator.hasNext()) {
         Member member = iterator.next();
-        System.out.printf("%d, %s, %s, %s, %s\n",
+        Iterator<Movie> movieIterator = member.getToWatchList().iterator();
+        StringBuilder movies = new StringBuilder();
+        while (movieIterator.hasNext()) {
+          Movie movie = movieIterator.next();
+          if (movies.length() > 0)
+            movies.append(",");
+          movies.append(movie.getTitle());
+        }
+        
+        System.out.printf("%d, %s, %s, %s\n",
           member.getAge(),
           member.getGender(),
-          member.getFavoriteGenre(),
-          member.getToWatchList()
+          member.getFavoriteGenre().toString(),
+          movies.toString()
           );
     }
   }
@@ -77,11 +110,11 @@ public class MemberHandler {
     }
 
     int age = Prompt.inputInt(
-        String.format("나이(%d)? ", member.getName()));
+        String.format("나이(%d)? ", member.getAge()));
     String gender = Prompt.inputString(
         String.format("성별(%s)? ", member.getGender()));
-    String favoriteGenre = Prompt.inputString(
-        String.format("취향 장르(%s)? ", member.getFavoriteGenre()));
+    Genre newFavoriteGenre = Prompt.inputGenre(
+        String.format("취향 장르(%s)? ", member.getFavoriteGenre().toString()));
     // toWatchList 변경어떻게 할겨
     
     String response = Prompt.inputString("정말 변경하시겠습니까?(y/N) ");
@@ -92,7 +125,8 @@ public class MemberHandler {
 
     member.setAge(age);
     member.setGender(gender);
-    member.setFavoriteGenre(favoriteGenre);
+    member.setFavoriteGenre(newFavoriteGenre);
+    
     // toWatchList 어떻게 할겨
     
     System.out.println("회원 변경하였습니다.");
@@ -119,14 +153,14 @@ public class MemberHandler {
 
   }
 
-  public void watch() {
-
-  }
+//  public void watch() {
+//
+//  }
 
   Member findByName(String name) {
     for (int i = 0; i < memberList.size(); i++) {
       Member member = memberList.get(i);
-      if (member.getName() == name) {
+      if (member.getName().equals(name)) {
         return member;
       }
     }
@@ -136,7 +170,7 @@ public class MemberHandler {
   int indexOf(String name) {
     for (int i = 0; i < memberList.size(); i++) {
       Member member = memberList.get(i);
-      if (member.getName() == name) {
+      if (member.getName().equals(name)) {
         return i;
       }
     }
@@ -144,10 +178,11 @@ public class MemberHandler {
   }
 
   public void printToWatchList() {
-
+    Member member = findByName(Prompt.inputString("이름? "));
+    member.getToWatchHandler().list();
   }
 
-  public void printHistory() {
-
-  }
+//  public void printHistory() {
+//
+//  }
 }
