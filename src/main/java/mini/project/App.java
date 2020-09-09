@@ -4,11 +4,12 @@
 package mini.project;
 
 public class App {
-  public String getGreeting() {
+  public static String getGreeting() {
     return "Hello apple.";
   }
 
   public static void main(String[] args) {
+    System.out.println(getGreeting());
     System.out.println("  ,--./,-.");
     System.out.println(" / #      \\");
     System.out.println("|          |");
