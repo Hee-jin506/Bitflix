@@ -2,6 +2,7 @@ package mini.project.util;
 
 import java.sql.Date;
 import java.util.Scanner;
+import mini.project.domain.Genre;
 
 public class Prompt {
   static Scanner keyboardScan = new Scanner(System.in);
@@ -18,6 +19,10 @@ public class Prompt {
 
   public static Date inputDate(String title) {
     return Date.valueOf(inputString(title));
+  }
+
+  public static Genre inputGenre(String title) {
+    return Genre.valueOf(inputString(title));
   }
 
   // 프롬프트의 사용이 모두 끝났으면
