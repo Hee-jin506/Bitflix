@@ -79,61 +79,58 @@ public class App {
         }
       }
       if (logedInMember != null) {
-        while (true) {
-          command = Prompt.inputString("명령> ");
-          if (logedInMember.getName().equals("관리자")) {
+        command = Prompt.inputString("명령> ");
+        if (logedInMember.getName().equals("관리자")) {
+          switch (command) {
+            case "회원관리":
+              memberHandler.manage();
+              break;
+            case "영화관리":
+              movieHandler.manage();
+              break;
+            case "종료":
+              System.out.println("프로그램을 종료합니다.");
+              break loop;
+          }
+        } else {
+          while (true) {
+            command = Prompt.inputString("명령> ");
             switch (command) {
-              case "회원관리":
-                memberHandler.manage();
+              case "로그아웃":
+                if (Prompt.inputString("정말 로그아웃 하시겠습니까?(y/N)").equalsIgnoreCase("y"))
+                  logedInMember = null;
                 break;
-              case "영화관리":
-                movieHandler.manage();
+                
+              case "영화시청":
+                memberHandler.watch(movieHandler);
+                break;
+              case "보고싶어요":
+                memberHandler.printToWatchList();
+                if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
+                  memberHandler.watch(movieHandler);
+                }
+                break;
+              case "장르별 더보기":
+                movieHandler.printGenre(Prompt.inputGenre("로맨스, 액션, 가족, 호러\n장르? "));
+                if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
+                  memberHandler.watch(movieHandler);
+                }
+                break;
+              case "인기순 더보기":
+                movieHandler.printBest();
+                if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
+                  memberHandler.watch(movieHandler);
+                }
+                break;
+              case "다시보기":
+                memberHandler.printHistory();
+                if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
+                  memberHandler.watch(movieHandler);
+                }
                 break;
               case "종료":
                 System.out.println("프로그램을 종료합니다.");
                 break loop;
-            }
-          } else {
-            while (true) {
-              command = Prompt.inputString("명령> ");
-              switch (command) {
-                case "로그아웃":
-                  if (Prompt.inputString("정말 로그아웃 하시겠습니까?(y/N)").equalsIgnoreCase("y"))
-                    logedInMember = null;
-                  break;
-
-                case "영화시청":
-                  memberHandler.watch(movieHandler);
-                  break;
-                case "보고싶어요":
-                  memberHandler.printToWatchList();
-                  if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
-                    memberHandler.watch(movieHandler);
-                  }
-                  break;
-                case "장르별 더보기":
-                  movieHandler.printGenre(Prompt.inputGenre("로맨스, 액션, 가족, 호러\n장르? "));
-                  if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
-                    memberHandler.watch(movieHandler);
-                  }
-                  break;
-                case "인기순 더보기":
-                  movieHandler.printBest();
-                  if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
-                    memberHandler.watch(movieHandler);
-                  }
-                  break;
-                case "다시보기":
-                  memberHandler.printHistory();
-                  if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
-                    memberHandler.watch(movieHandler);
-                  }
-                  break;
-                case "종료":
-                  System.out.println("프로그램을 종료합니다.");
-                  break loop;
-              }
-
             }
           }
         }
