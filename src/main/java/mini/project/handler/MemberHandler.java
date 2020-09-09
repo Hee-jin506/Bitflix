@@ -42,7 +42,7 @@ public class MemberHandler {
   // List<Movie> favoriteGenre;
   // List<Movie> toWatchList;
   //
-  public void add() {
+  public Member add() {
     System.out.println("[회원 등록]");
 
     Member member = new Member();
@@ -75,6 +75,7 @@ public class MemberHandler {
       }
     }
     memberList.add(member);
+    return member;
   }
 
   public void list() {
@@ -153,7 +154,7 @@ public class MemberHandler {
   //
   // }
 
-  Member findByName(String name) {
+  public Member findByName(String name) {
     for (int i = 0; i < memberList.size(); i++) {
       Member member = memberList.get(i);
       if (member.getName().equals(name)) {
@@ -175,11 +176,13 @@ public class MemberHandler {
 
   public void printToWatchList() {
     Member member = findByName(Prompt.inputString("이름? "));
+    Screen.logo("To Watch List");
     member.getToWatchHandler().list();
   }
 
   public void printHistory() throws InterruptedException {
     Member member = findByName(Prompt.inputString("이름? "));
+    Screen.logo("HISTORY");
     member.getWatchedHandler().list();
   }
 
@@ -225,6 +228,8 @@ public class MemberHandler {
     movie.setViewCount(movie.getViewCount() + 1);
 
     member.getWatchedList().add(movie);
+
+    generateFavoriteGenre();
   }
 
   public void generateFavoriteGenre() {
