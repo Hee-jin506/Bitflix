@@ -116,30 +116,30 @@ public class App {
             break;
 
           case "영화시청":
-            memberHandler.watch(movieHandler, loggedInMember);
+            memberHandler.watch(loggedInMember);
             break;
           case "보고싶어요":
             memberHandler.printToWatchList(loggedInMember);
             if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
-              memberHandler.watch(movieHandler, loggedInMember);
+              memberHandler.watch(loggedInMember);
             }
             break;
           case "장르별 더보기":
             movieHandler.printGenre(Prompt.inputGenre("로맨스, 액션, 가족, 호러\n장르? "));
             if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
-              memberHandler.watch(movieHandler, loggedInMember);
+              memberHandler.watch(loggedInMember);
             }
             break;
           case "인기순 더보기":
             movieHandler.printBest();
             if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
-              memberHandler.watch(movieHandler, loggedInMember);
+              memberHandler.watch(loggedInMember);
             }
             break;
           case "다시보기":
             memberHandler.printHistory(loggedInMember);
             if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
-              memberHandler.watch(movieHandler, loggedInMember);
+              memberHandler.watch(loggedInMember);
             }
             break;
           case "종료":

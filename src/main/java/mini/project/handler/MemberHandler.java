@@ -18,31 +18,27 @@ public class MemberHandler {
   }
 
   public void manage() {
-
-    
-    switch (Prompt.inputString("입력>(빈문자열:취소) ")) {
-      case "회원 추가":
-        add();
-        break;
-      case "회원 삭제":
-        delete();
-        break;
-      case "회원 수정":
-        update();
-        break;
-      case "회원 조회":
-        list();
-        break;
+    while (true) {
+      switch (Prompt.inputString("입력>(빈문자열:취소) ")) {
+        case "회원추가":
+          add();
+          break;
+        case "회원삭제":
+          delete();
+          break;
+        case "회원수정":
+          update();
+          break;
+        case "회원조회":
+          list();
+          break;
+        default:
+          System.out.println("잘못된 입력입니다.");
+      }
     }
   }
 
-  //
-  // String name;
-  // int age;
-  // int gender;
-  // List<Movie> favoriteGenre;
-  // List<Movie> toWatchList;
-  //
+
   public Member add() {
     System.out.println("[회원 등록]");
 
@@ -104,8 +100,6 @@ public class MemberHandler {
     String password = Prompt.inputString(String.format("비밀번호(%s)? ", member.getPassword()));
     Genre newFavoriteGenre =
         Prompt.inputGenre(String.format("취향 장르(%s)? ", member.getFavoriteGenre().toString()));
-    // toWatchList 변경어떻게 할겨
-
     String response = Prompt.inputString("정말 변경하시겠습니까?(y/N) ");
     if (!response.equalsIgnoreCase("y")) {
       System.out.println("회원 변경을 취소하였습니다.");
@@ -163,8 +157,6 @@ public class MemberHandler {
   }
 
 
-
-  //
   public void printToWatchList(Member member) {
     Screen.logo("To Watch List");
     member.getToWatchHandler().list();
@@ -175,7 +167,7 @@ public class MemberHandler {
     member.getWatchedHandler().list();
   }
 
-  public void watch(MovieHandler movieHandler, Member member) throws InterruptedException {
+  public void watch(Member member) throws InterruptedException {
     Movie movie;
 
     while (true) {
@@ -186,28 +178,8 @@ public class MemberHandler {
         break;
       }
     }
-    Screen.getWatchScreen();
-    System.out.print("영화가 시작합니다");
-    for (int i = 0; i < 4; i++) {
-      Thread.sleep(500);
-      System.out.print(".");
-    }
-    System.out.println();
 
-
-    System.out.print("영화를 보는 중");
-
-
-    Screen.getMovieScreen(movie.getGenre());
-
-
-    for (int i = 0; i < 5; i++) {
-      Thread.sleep(500);
-      System.out.print(".");
-    }
-    System.out.println();
-
-    System.out.println("영화가 끝납니다..");
+    Screen.getWatchScreen(movie.getGenre());
 
     if (member.getToWatchHandler().findByTitle(movie.getTitle()) != null) {
       member.getToWatchList().remove(member.getToWatchHandler().indexOf(movie.getTitle()));

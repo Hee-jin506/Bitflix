@@ -40,7 +40,7 @@ public class Member {
   public void setName(String name) {
     this.name = name;
   }
-  
+
   public String getID() {
     return ID;
   }
@@ -56,7 +56,7 @@ public class Member {
   public void setPassword(String password) {
     this.password = password;
   }
-  
+
 
   public Genre getFavoriteGenre() {
     return favoriteGenre;
@@ -68,5 +68,9 @@ public class Member {
 
   public List<Movie> getToWatchList() {
     return toWatchList;
+  }
+
+  public voiaddToWatchList() {
+
   }
 }
