@@ -19,6 +19,7 @@ public class MemberHandler {
 
   public void manage() {
     while (true) {
+      Screen.viewMenu(Screen.MEMBER_MANAGE_PAGE);
       switch (Prompt.inputString("입력>(빈문자열:취소) ")) {
         case "회원추가":
           add();
@@ -32,6 +33,8 @@ public class MemberHandler {
         case "회원조회":
           list();
           break;
+        case "":
+          return;
         default:
           System.out.println("잘못된 입력입니다.");
       }
@@ -156,81 +159,6 @@ public class MemberHandler {
     return -1;
   }
 
-
-  public void printToWatchList(Member member) {
-    Screen.logo("To Watch List");
-    member.getToWatchHandler().list();
-  }
-
-  public void printHistory(Member member) throws InterruptedException {
-    Screen.logo("HISTORY");
-    member.getWatchedHandler().list();
-  }
-
-  public void watch(Member member) throws InterruptedException {
-    Movie movie;
-
-    while (true) {
-      movie = movieHandler.findByTitle(Prompt.inputString("무슨 영화를 보시겠습니까 ? "));
-      if (movie == null) {
-        System.out.println("해당 제목의 영화를 찾지 못하였습니다.\n 다시 입력해주세요.");
-      } else {
-        break;
-      }
-    }
-
-    Screen.getWatchScreen(movie.getGenre());
-
-    if (member.getToWatchHandler().findByTitle(movie.getTitle()) != null) {
-      member.getToWatchList().remove(member.getToWatchHandler().indexOf(movie.getTitle()));
-    }
-
-    movie.setViewCount(movie.getViewCount() + 1);
-
-    member.getWatchedList().add(movie);
-
-    generateFavoriteGenre(member);
-  }
-
-  public void generateFavoriteGenre(Member member) {
-    int[] genreCount = new int[4];
-    for (int i = 0; i < member.getWatchedList().size(); i++) {
-      switch (member.getWatchedList().get(i).getGenre()) {
-        case 로맨스:
-          genreCount[0]++;
-          break;
-        case 액션:
-          genreCount[1]++;
-          break;
-        case 호러:
-          genreCount[2]++;
-          break;
-        case 가족:
-          genreCount[3]++;
-      }
-    }
-    int index = 0;
-    int max = genreCount[0];
-    for (int i = 0; i < genreCount.length; i++) {
-      if (genreCount[i] > max) {
-        max = genreCount[i];
-        index = i;
-      }
-    }
-    switch (index) {
-      case 0:
-        member.setFavoriteGenre(Genre.로맨스);
-        break;
-      case 1:
-        member.setFavoriteGenre(Genre.액션);
-        break;
-      case 2:
-        member.setFavoriteGenre(Genre.호러);
-        break;
-      case 3:
-        member.setFavoriteGenre(Genre.가족);
-    }
-  }
 
 
   // 1) 여태 시청한 영화 개수 대비 장르를 계산해서 가장 비중이 높은 장르를 favorite으로 정한다.

@@ -51,7 +51,7 @@ public class App {
       movieList.add(movie);
     }
 
-   
+
 
     /*
      * if (Prompt.inputString("회원가입하시겠습니까?(y/N)").equalsIgnoreCase("y")) { loggedInMember =
@@ -64,7 +64,7 @@ public class App {
       if (loggedInMember == null) {
         Screen.bitflixLogo();
         movieHandler.printBest();
-        Screen.viewMenu(BEFORE_LOGIN_PAGE);
+        Screen.viewMenu(Screen.BEFORE_LOGIN_PAGE);
         switch (Prompt.inputString("명령> ")) {
           case "회원가입":
             memberHandler.add();
@@ -73,14 +73,14 @@ public class App {
             loggedInMember = memberHandler.findByID(Prompt.inputString("아이디를 입력하세요."));
             break;
           case "관리자":
-            Screen.viewMenu(MANAGER_PAGE);
+            Screen.viewMenu(Screen.MANAGER_PAGE);
             switch (Prompt.inputString("명령> ")) {
               case "회원관리":
-                Screen.viewMenu(MEMBER_MANAGE_PAGE);
+
                 memberHandler.manage();
                 break;
               case "영화관리":
-                
+                Screen.viewMenu(Screen.MOVIE_MANAGE_PAGE);
                 movieHandler.manage();
                 break;
               case "종료":
@@ -103,7 +103,7 @@ public class App {
         Screen.bitflixLogo();
         movieHandler.printGenre(loggedInMember.getFavoriteGenre());
         movieHandler.printBest();
-        Screen.viewMenu(AFTER_LOGIN_PAGE);
+        Screen.viewMenu(Screen.AFTER_LOGIN_PAGE);
 
         switch (Prompt.inputString("명령> ")) {
           case "로그아웃":
@@ -133,7 +133,7 @@ public class App {
             }
             break;
           case "다시보기":
-            memberHandler.printHistory(loggedInMember);
+            loggedInMember.printHistory();
             if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
               loggedInMember.watch(loggedInMember.getWatchedHandler());
             }

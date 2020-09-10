@@ -17,19 +17,26 @@ public class MovieHandler {
   }
 
   public void manage() {
-    switch (Prompt.inputString("입력>(빈문자열:취소) ")) {
-      case "영화 추가":
-        add();
-        break;
-      case "영화 삭제":
-        delete();
-        break;
-      case "영화 수정":
-        update();
-        break;
-      case "영화 조회":
-        list();
-        break;
+    while (true) {
+      Screen.viewMenu(Screen.MOVIE_MANAGE_PAGE);
+      switch (Prompt.inputString("입력>(빈문자열:취소) ")) {
+        case "영화추가":
+          add();
+          break;
+        case "영화삭제":
+          delete();
+          break;
+        case "영화수정":
+          update();
+          break;
+        case "영화조회":
+          list();
+          break;
+        case "":
+          return;
+        default:
+          System.out.println("잘못된 입력입니다.");
+      }
     }
   }
 
@@ -52,20 +59,20 @@ public class MovieHandler {
   }
 
   public void list() {
-//    System.out.println("[영화 목록]");
+    // System.out.println("[영화 목록]");
     Movie[] movies;
     movies = new Movie[movieList.size()];
     Iterator<Movie> iterator = movieList.iterator();
     for (int i = 0; iterator.hasNext(); i++) {
       movies[i] = iterator.next();
-      }
+    }
     Screen.viewMovies(movies);
 
-//    Iterator<Movie> iterator = movieList.iterator();
-//    while (iterator.hasNext()) {
-//      Movie movie = iterator.next();
-//      System.out.printf("%s, %s, %s\n", movie.getTitle(), movie.getGenre(), movie.getViewCount());
-//    }
+    // Iterator<Movie> iterator = movieList.iterator();
+    // while (iterator.hasNext()) {
+    // Movie movie = iterator.next();
+    // System.out.printf("%s, %s, %s\n", movie.getTitle(), movie.getGenre(), movie.getViewCount());
+    // }
 
   }
 
@@ -146,7 +153,7 @@ public class MovieHandler {
         Screen.logo("FAMILY");
         break;
       case 호러:
-        Screen.logo("Horror");
+        Screen.logo("HORROR");
         break;
       case 로맨스:
         Screen.logo("Romance");
@@ -154,12 +161,6 @@ public class MovieHandler {
     }
     Movie[] movies = findByGenre(genre).toArray(new Movie[] {});
     Screen.viewMovies(movies);
-//    Iterator<Movie> iterator = findByGenre(genre).iterator();
-//    while (iterator.hasNext()) {
-//      Movie movie = iterator.next();
-//      
-//      System.out.printf("%s, %s\n", movie.getTitle(), movie.getGenre().toString());
-//    }
   }
 
   // movieList를 조회순으로 정렬하는 메서드
@@ -181,8 +182,8 @@ public class MovieHandler {
     Movie[] movies = sortByViewCount();
     Screen.logo("Top 10");
     Screen.viewMovies(movies);
-//    for (Movie movie : movies) {
-//      System.out.printf("%s, %s\n", movie.getTitle(), movie.getGenre());
-//    }
+    // for (Movie movie : movies) {
+    // System.out.printf("%s, %s\n", movie.getTitle(), movie.getGenre());
+    // }
   }
 }

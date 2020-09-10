@@ -5,6 +5,12 @@ import mini.project.domain.Movie;
 
 public class Screen {
 
+  public static final int BEFORE_LOGIN_PAGE = 0;
+  public static final int MANAGER_PAGE = 1;
+  public static final int AFTER_LOGIN_PAGE = 2;
+  public static final int MEMBER_MANAGE_PAGE = 3;
+  public static final int MOVIE_MANAGE_PAGE = 4;
+
   public static void beforeSignUp() {
     logo("BITFLIX");
 
@@ -49,10 +55,15 @@ public class Screen {
 
   public static void bitflixLogo() {
     System.out.println("  ____    _____   _______   ______   _        _____  __   __");
+    Thread.sleep(300);
     System.out.println(" |  _ \\  |_   _| |__   __| |  ____| | |      |_   _| \\ \\ / /");
+    Thread.sleep(300);
     System.out.println(" | |_) |   | |      | |    | |__    | |        | |    \\ V /");
+    Thread.sleep(300);
     System.out.println(" |  _ <    | |      | |    |  __|   | |        | |     > < ");
+    Thread.sleep(300);
     System.out.println(" | |_) |  _| |_     | |    | |      | |____   _| |_   / . \\ ");
+    Thread.sleep(300);
     System.out.println(" |____/  |_____|    |_|    |_|      |______| |_____| /_/ \\_\\");
     System.out.println();
   }
@@ -65,11 +76,11 @@ public class Screen {
     Thread.sleep(300);
     System.out.println("                --( /     \\ )XXXXXXXXXXXXX           ");
     Thread.sleep(300);
-    System.out.println();
+    System.out.println("            --XXX(   O   O  )XXXXXXXXXXXXXXX-      ");
     Thread.sleep(300);
-    System.out.println();
+    System.out.println("           /XXX(       U     )        XXXXXXX\\       ");
     Thread.sleep(300);
-    System.out.println();
+    System.out.println("         /XXXXX(              )--   XXXXXXXXXXX\\       ");
     Thread.sleep(300);
     System.out.println();
     Thread.sleep(300);
