@@ -159,6 +159,20 @@ public class MemberHandler {
     return -1;
   }
 
+  public Member logIn() {
+    while (true) {
+      String ID = Prompt.inputString("아이디를 입력하세요.");
+      if (ID.length() == 0) {
+       return null;
+      }
+      if (findByID(ID) == null) {
+        System.out.println("일치하는 아이디가 없습니다. 다시 입력해주세요.(빈문자열: 취소) ");
+      } else {
+        return findByID(ID);
+      }
+    }
+  }
+
 
 
   // 1) 여태 시청한 영화 개수 대비 장르를 계산해서 가장 비중이 높은 장르를 favorite으로 정한다.

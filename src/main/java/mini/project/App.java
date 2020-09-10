@@ -41,24 +41,28 @@ public class App {
             memberHandler.add();
             break;
           case "로그인":
-            loggedInMember = memberHandler.findByID(Prompt.inputString("아이디를 입력하세요."));
+            loggedInMember = memberHandler.logIn();
             break;
           case "관리자":
-            Screen.viewMenu(Screen.MANAGER_PAGE);
-            switch (Prompt.inputString("명령> ")) {
-              case "회원관리":
-
-                memberHandler.manage();
-                break;
-              case "영화관리":
-                Screen.viewMenu(Screen.MOVIE_MANAGE_PAGE);
-                movieHandler.manage();
-                break;
-              case "종료":
-                System.out.println("프로그램을 종료합니다.");
-                return;
-              default:
-                System.out.println("잘못된 명령입니다.");
+            loop1:
+            while (true) {
+              Screen.viewMenu(Screen.MANAGER_PAGE);
+              switch (Prompt.inputString("명령>(빈문자열: 뒤로가기) ")) {
+                case "회원관리":
+                  memberHandler.manage();
+                  break;
+                case "영화관리":
+                  Screen.viewMenu(Screen.MOVIE_MANAGE_PAGE);
+                  movieHandler.manage();
+                  break;
+                case "종료":
+                  System.out.println("프로그램을 종료합니다.");
+                  return;
+                case "":
+                  break loop1;
+                default:
+                  System.out.println("잘못된 명령입니다.");
+              }
             }
             break;
           case "종료":
@@ -120,14 +124,8 @@ public class App {
 
       }
     }
-  }
-
-
-  /*
-   *
-   * System.out.println("실행할 수 없는 명령입니다.");
-   */
+  } 
 }
-// System.out.println(); // 이전 명령의 실행을 구분하기 위해 빈 줄 출력
+
 
 

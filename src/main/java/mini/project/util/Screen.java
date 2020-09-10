@@ -267,9 +267,9 @@ public class Screen {
       case 0:
         System.out.println("[메인 페이지]");
         System.out.println("**************************************************************");
-        System.out.println("*            로그인            *             회원가입        *");
+        System.out.println("*            로그인            *             회원가입            *");
         System.out.println("**************************************************************");
-        System.out.println("*            관리자            *              종료           *");
+        System.out.println("*            관리자            *              종료              *");
         System.out.println("**************************************************************");
         break;
       case 1:
