@@ -160,13 +160,19 @@ public class MemberHandler {
   }
 
   public Member logIn() {
+    System.out.println("아이디와 비밀번호를 입력해주세요. ");
+    System.out.println("아이디에 빈 문자열을 입력하시면 취소됩니다.");
     while (true) {
-      String ID = Prompt.inputString("아이디를 입력하세요.");
-      if (ID.length() == 0) {
-       return null;
-      }
+      String ID = Prompt.inputString("아이디: ");
+      if (ID.equals(""))
+        return null;
+      String password = Prompt.inputString("비밀번호: ");
+
       if (findByID(ID) == null) {
-        System.out.println("일치하는 아이디가 없습니다. 다시 입력해주세요.(빈문자열: 취소) ");
+        System.out.println("아이디를 찾을 수 없습니다.");
+
+      } else if (!findByID(ID).getPassword().equals(password)) {
+        System.out.println("비밀번호가 틀렸습니다.");
       } else {
         return findByID(ID);
       }

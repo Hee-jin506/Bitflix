@@ -162,7 +162,16 @@ public class MovieHandler {
     }
     Movie[] movies = findByGenre(genre).toArray(new Movie[] {});
     Screen.viewMovies(movies);
+
   }
+
+  // 베스트 영화를 출력하는 메서드
+  // public void printBestMovies() {
+  // for
+  //
+  // }
+  //
+
 
   // movieList를 조회순으로 정렬하는 메서드
   public Movie[] sortByViewCount() {
