@@ -42,7 +42,7 @@ public class MemberHandler {
   }
 
 
-  public Member add() {
+  public void add() {
     System.out.println("[회원 등록]");
 
     Member member = new Member();
@@ -67,7 +67,7 @@ public class MemberHandler {
       }
     }
     memberList.add(member);
-    return member;
+    // return member;
   }
 
   public void list() {
