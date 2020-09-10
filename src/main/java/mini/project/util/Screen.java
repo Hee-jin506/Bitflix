@@ -53,7 +53,7 @@ public class Screen {
     System.out.println();
   }
 
-  public static void bitflixLogo() {
+  public static void bitflixLogo() throws InterruptedException {
     System.out.println("  ____    _____   _______   ______   _        _____  __   __");
     Thread.sleep(300);
     System.out.println(" |  _ \\  |_   _| |__   __| |  ____| | |      |_   _| \\ \\ / /");
@@ -66,6 +66,7 @@ public class Screen {
     Thread.sleep(300);
     System.out.println(" |____/  |_____|    |_|    |_|      |______| |_____| /_/ \\_\\");
     System.out.println();
+    Thread.sleep(800);
   }
 
 
@@ -82,15 +83,31 @@ public class Screen {
     Thread.sleep(300);
     System.out.println("         /XXXXX(              )--   XXXXXXXXXXX\\       ");
     Thread.sleep(300);
-    System.out.println();
+    System.out.println("        /XXXXX/ (      O     )   XXXXXX   \\XXXXX\\");
     Thread.sleep(300);
-    System.out.println();
+    System.out.println("        XXXXX/   /            XXXXXX   \\   \\XXXXX----  ");
     Thread.sleep(300);
-    System.out.println();
+    System.out.println("        XXXXXX  /          XXXXXX         \\  ----  -         ");
     Thread.sleep(300);
-    System.out.println();
+    System.out.println("---     XXX  /          XXXXXX      \\           ---        ");
     Thread.sleep(300);
-    System.out.println();
+    System.out.println("  --  --  /      /\\  XXXXXX            /     ---=         ");
+    Thread.sleep(300);
+    System.out.println("    -        /    XXXXXX              '--- XXXXXX         ");
+    Thread.sleep(300);
+    System.out.println("      --\\/XXX\\ XXXXXX                      /XXXXX      ");
+    Thread.sleep(300);
+    System.out.println("        \\XXXXXXXXX                        /XXXXX/");
+    Thread.sleep(300);
+    System.out.println("         \\XXXXXX                         /XXXXX/       ");
+    Thread.sleep(300);
+    System.out.println("           \\XXXXX--  /                -- XXXX/       ");
+    Thread.sleep(300);
+    System.out.println("            --XXXXXXX---------------  XXXXX--         ");
+    Thread.sleep(300);
+    System.out.println("               \\XXXXXXXXXXXXXXXXXXXXXXXX-            ");
+    Thread.sleep(300);
+    System.out.println("                 --XXXXXXXXXXXXXXXXXX-");
   }
 
   public static void getFamilyScreen() throws InterruptedException {
@@ -131,35 +148,59 @@ public class Screen {
     System.out.println("                `'-- )'/    |   ,'  /-'");
   }
 
-  public static void getRomanceScreen() {
-    System.out.println(".,,,,,,,,,,.");
-    System.out.println(",;;;;;;;;;;;;;;,");
-    System.out.println(",;;;;;;;;;;;)));;(((,,;;;,,_");
-    System.out.println(",;;;;;;;;;;' |)))))))))))\\\\");
-    System.out.println(";;;;;;/ )'' - /,)))((((((((((\\");
-    System.out.println(";;;;' \\ ~|\\ ))))))))))))))");
-    System.out.println("/ / | ((((((((((((((");
-    System.out.println("/' \\ _/~' ')|()))))))))");
-    System.out.println("/' `\\ /> o_/)))((((((((");
-    System.out.println("/ /' `~~(____ / ()))))))))))");
-    System.out.println("| ---, \\ \\ ((((((((((");
-    System.out.println("`\\ \\~-_____| ))))))))");
-    System.out.println("`\\ | |_.---. \\");
+  public static void getRomanceScreen() throws InterruptedException {
+    System.out.println("           .,,,,,,,,,,.");
+    Thread.sleep(300);
+    System.out.println("         ,;;;;;;;;;;;;;;,");
+    Thread.sleep(300);
+    System.out.println("       ,;;;;;;;;;;;)));;(((,,;;;,,_");
+    Thread.sleep(300);
+    System.out.println("      ,;;;;;;;;;;'      |)))))))))))\\\\");
+    Thread.sleep(300);
+    System.out.println("      ;;;;;;/ )''    - /,)))((((((((((\\");
+    Thread.sleep(300);
+    System.out.println("      ;;;;' \\        ~|\\  ))))))))))))))");
+    Thread.sleep(300);
+    System.out.println("      /     /         |   ((((((((((((((");
+    Thread.sleep(300);
+    System.out.println("    /'      \\      _/~'    ')|()))))))))");
+    Thread.sleep(300);
+    System.out.println("  /'         `\\   />     o_/)))((((((((");
+    Thread.sleep(300);
+    System.out.println(" /          /' `~~(____ /  ()))))))))))");
+    Thread.sleep(300);
+    System.out.println("|     ---,   \\        \\     ((((((((((");
+    Thread.sleep(300);
+    System.out.println("          `\\   \\~-_____|      ))))))))");
+    Thread.sleep(300);
+    System.out.println("            `\\  |      |_.---.  \\");
   }
 
-  public static void getActionScreen() {
+  public static void getActionScreen() throws InterruptedException {
     System.out.println("           _                         _");
+    Thread.sleep(300);
     System.out.println("       _==/          i     i          \\==");
+    Thread.sleep(300);
     System.out.println("     /XX/            |\\___/|            \\XX\\");
+    Thread.sleep(300);
     System.out.println("   /XXXX\\            |XXXXX|            /XXXX\\");
+    Thread.sleep(300);
     System.out.println("  |XXXXXX\\_         _XXXXXXX_         _/XXXXXX|");
+    Thread.sleep(300);
     System.out.println(" XXXXXXXXXXXxxxxxxxXXXXXXXXXXXxxxxxxxXXXXXXXXXXX");
+    Thread.sleep(300);
     System.out.println("|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|");
+    Thread.sleep(300);
     System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    Thread.sleep(300);
     System.out.println("|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|");
+    Thread.sleep(300);
     System.out.println(" XXXXXX/^^^^\"\\XXXXXXXXXXXXXXXXXXXXX/^^^^^\\XXXXXX");
+    Thread.sleep(300);
     System.out.println("  |XXX|       \\XXX/^^\\XXXXX/^^\\XXX/       |XXX|");
+    Thread.sleep(300);
     System.out.println("    \\XX\\       \\X/    \\XXX/    \\X/       /XX/");
+    Thread.sleep(300);
     System.out.println("       \"\\       \"      \\X/      \"       /\"");
 
   }
@@ -175,12 +216,19 @@ public class Screen {
 
     System.out.print("영화를 보는 중");
     System.out.println("    '-.");
+    Thread.sleep(300);
     System.out.println("        '-. _____    ");
+    Thread.sleep(300);
     System.out.println(" .-._      |     '.  ");
+    Thread.sleep(300);
     System.out.println(":  ..      |      :  ");
+    Thread.sleep(300);
     System.out.println("'-._+      |    .-'");
+    Thread.sleep(300);
     System.out.println(" /  \\     .'i--i");
+    Thread.sleep(300);
     System.out.println("/    \\ .-'_/____\\___");
+    Thread.sleep(300);
     System.out.println("    .-'  :       ");
 
 
