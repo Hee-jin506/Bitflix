@@ -99,9 +99,9 @@ public class Member {
     Movie movie;
 
     while (true) {
-      movie = movieHandler.findByTitle(Prompt.inputString("무슨 영화를 보시겠습니까 ? "));
+      movie = movieHandler.findByTitle(Prompt.inputString("무슨 영화를 보시겠습니까? "));
       if (movie == null) {
-        System.out.println("해당 제목의 영화를 찾지 못하였습니다.\n 다시 입력해주세요.");
+        System.out.println("해당 제목의 영화를 찾지 못하였습니다.\n다시 입력해주세요.");
       } else {
         break;
       }
