@@ -22,7 +22,16 @@ public class Prompt {
   }
 
   public static Genre inputGenre(String title) {
-    return Genre.valueOf(inputString(title));
+    Genre genre;
+    while (true) {
+      try {
+        genre = Genre.valueOf(inputString(title));
+        break;
+      } catch (Exception e) {
+        System.out.println("다시 입력해주세요.");
+      }
+    }
+    return genre;
   }
 
   // 프롬프트의 사용이 모두 끝났으면

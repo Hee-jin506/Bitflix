@@ -158,6 +158,7 @@ public class MovieHandler {
       case 로맨스:
         Screen.logo("Romance");
         break;
+
     }
     Movie[] movies = findByGenre(genre).toArray(new Movie[] {});
     Screen.viewMovies(movies);
@@ -180,7 +181,7 @@ public class MovieHandler {
 
   public void printBest() {
     Movie[] movies = sortByViewCount();
-    Screen.logo("Top 10");
+    Screen.logo("Top 5");
     Screen.viewMovies(movies);
     // for (Movie movie : movies) {
     // System.out.printf("%s, %s\n", movie.getTitle(), movie.getGenre());

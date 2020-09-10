@@ -28,7 +28,7 @@ public class Screen {
       // break;
       // }
       // }
-      if (i == 10) {
+      if (i == 5) {
         break;
       }
       System.out.printf("%10s\t%d. %s\n", "", i + 1, movies[i].getTitle());

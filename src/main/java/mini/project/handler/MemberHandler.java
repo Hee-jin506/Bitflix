@@ -52,7 +52,7 @@ public class MemberHandler {
     System.out.println("장르 : 로맨스, 액션, 가족, 호러");
     member.setFavoriteGenre(Prompt.inputGenre("좋아하는 장르? "));
 
-    System.out.println("보고싶은 영화");
+    System.out.println("보고싶은 영화?");
 
     while (true) {
       String str = Prompt.inputString("찾으시는 영화의 제목을 입력하세요.(빈문자열: 넘어가기)");

@@ -4,6 +4,7 @@
 package mini.project;
 
 import mini.project.basic_movie.Movies;
+import mini.project.domain.Genre;
 import mini.project.domain.Member;
 import mini.project.domain.Movie;
 import mini.project.handler.MemberHandler;
@@ -17,10 +18,11 @@ import mini.project.util.Screen;
 public class App {
 
   public static void main(String[] args) throws InterruptedException {
-    
+
     List<Movie> movieList = new ArrayList<>();
     Movies.addBasicMovies(movieList);
     MovieHandler movieHandler = new MovieHandler(movieList);
+
     List<Member> memberList = new ArrayList<>();
     MemberHandler memberHandler = new MemberHandler(memberList, movieHandler);
 
@@ -90,10 +92,12 @@ public class App {
             }
             break;
           case "장르별 더보기":
-            movieHandler.printGenre(Prompt.inputGenre("로맨스, 액션, 가족, 호러\n장르? "));
+            Genre genre = Prompt.inputGenre("로맨스, 액션, 가족, 호러\n장르? ");
+            movieHandler.printGenre(genre);
             if (Prompt.inputString("영화를 보시겠습니까?(y/N)").equalsIgnoreCase("y")) {
               loggedInMember.watch(movieHandler);
             }
+
             break;
           case "인기순 더보기":
             movieHandler.printBest();
