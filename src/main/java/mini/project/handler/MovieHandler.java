@@ -159,27 +159,25 @@ public class MovieHandler {
         break;
 
     }
-    Movie[] movies = findByGenre(genre).toArray(new Movie[] {});
-    Screen.viewMovies(movies);
+    MovieHandler genreHandler = new MovieHandler(findByGenre(genre));
+    genreHandler.list();
 
   }
 
   public void printBest() {
+    List<Movie> bestMovieList = (List<Movie>)((ArrayList<Movie>)movieList).clone();
     
-    Movie[] bestArr = movieList.toArray(new Movie[] {});
-    for (int i = 0; i < bestArr.length; i++) {
-      for (int j = 0; j < bestArr.length - i - 1; j++) {
-        if (bestArr[j].getViewCount() < bestArr[j + 1].getViewCount()) {
-          Movie temp = bestArr[j];
-          bestArr[j] = bestArr[j + 1];
-          bestArr[j + 1] = temp;
+    for (int i = 0; i < movieList.size(); i++) {
+      for (int j = 0; j < bestMovieList.size() - i - 1; j++) {
+        if (bestMovieList.get(i).getViewCount() < bestMovieList.get(j + 1).getViewCount()) {
+          Movie temp = bestMovieList.get(j);
+          bestMovieList.set(j, bestMovieList.get(j + 1));
+          bestMovieList.set(j + 1, temp);
         }
       }
     }
     Screen.logo("Top 5");
-    Screen.viewMovies(bestArr);
-    // for (Movie movie : movies) {
-    // System.out.printf("%s, %s\n", movie.getTitle(), movie.getGenre());
-    // }
+    MovieHandler bestHandler = new MovieHandler(bestMovieList);
+    bestHandler.list();
   }
 }

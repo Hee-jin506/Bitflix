@@ -18,6 +18,7 @@ public class Movies {
     movieList.add(new Movie("어벤져스", Genre.액션));
     movieList.add(new Movie("테이큰", Genre.액션));
     movieList.add(new Movie("매드맥스", Genre.액션));
+    movieList.add(new Movie("블랙위도우", Genre.액션));
     
     movieList.add(new Movie("인어공주", Genre.가족));
     movieList.add(new Movie("토이스토리", Genre.가족));
