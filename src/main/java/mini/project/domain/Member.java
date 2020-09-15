@@ -1,11 +1,11 @@
 package mini.project.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 import mini.project.handler.MovieHandler;
-import mini.project.util.ArrayList;
-import mini.project.util.List;
 import mini.project.util.Prompt;
 import mini.project.util.Screen;
-import mini.project.util.Stack;
 
 public class Member {
 

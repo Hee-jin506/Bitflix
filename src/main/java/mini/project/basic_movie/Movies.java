@@ -1,8 +1,8 @@
 package mini.project.basic_movie;
 
+import java.util.List;
 import mini.project.domain.Genre;
 import mini.project.domain.Movie;
-import mini.project.util.List;
 
 public class Movies {
   

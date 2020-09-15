@@ -1,5 +1,7 @@
 package mini.project.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import mini.project.basic_movie.Movies;
 import mini.project.domain.Genre;
 import mini.project.domain.Member;

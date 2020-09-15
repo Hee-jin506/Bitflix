@@ -1,10 +1,10 @@
 package mini.project.handler;
 
+import java.util.Iterator;
+import java.util.List;
 import mini.project.domain.Genre;
 import mini.project.domain.Member;
 import mini.project.domain.Movie;
-import mini.project.util.Iterator;
-import mini.project.util.List;
 import mini.project.util.Prompt;
 import mini.project.util.Screen;
 

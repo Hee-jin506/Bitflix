@@ -1,11 +1,10 @@
 package mini.project.handler;
 
-
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import mini.project.domain.Genre;
 import mini.project.domain.Movie;
-import mini.project.util.ArrayList;
-import mini.project.util.Iterator;
-import mini.project.util.List;
 import mini.project.util.Prompt;
 import mini.project.util.Screen;
 
@@ -165,16 +164,8 @@ public class MovieHandler {
 
   }
 
-  // 베스트 영화를 출력하는 메서드
-  // public void printBestMovies() {
-  // for
-  //
-  // }
-  //
-
-
-  // movieList를 조회순으로 정렬하는 메서드
-  public Movie[] sortByViewCount() {
+  public void printBest() {
+    
     Movie[] bestArr = movieList.toArray(new Movie[] {});
     for (int i = 0; i < bestArr.length; i++) {
       for (int j = 0; j < bestArr.length - i - 1; j++) {
@@ -185,13 +176,8 @@ public class MovieHandler {
         }
       }
     }
-    return bestArr;
-  }
-
-  public void printBest() {
-    Movie[] movies = sortByViewCount();
     Screen.logo("Top 5");
-    Screen.viewMovies(movies);
+    Screen.viewMovies(bestArr);
     // for (Movie movie : movies) {
     // System.out.printf("%s, %s\n", movie.getTitle(), movie.getGenre());
     // }
