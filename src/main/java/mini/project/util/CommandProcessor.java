@@ -1,8 +1,14 @@
 package mini.project.util;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import mini.project.basic_movie.Movies;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+import java.util.Stack;
 import mini.project.domain.Genre;
 import mini.project.domain.Member;
 import mini.project.domain.Movie;
@@ -11,13 +17,111 @@ import mini.project.handler.MovieHandler;
 
 public class CommandProcessor {
   public static List<Movie> movieList = new ArrayList<>();
-  static {
-    Movies.addBasicMovies(movieList);
-  }
   public static MovieHandler movieHandler = new MovieHandler(movieList);
   public static List<Member> memberList = new ArrayList<>();
   public static MemberHandler memberHandler = new MemberHandler(memberList, movieHandler);
   public static Member loggedInMember;
+
+  private static File movieFile = new File("./movie.csv");
+  private static File memberFile = new File("./member.csv");
+
+
+  public static void loadMovies() {
+    FileReader in = null;
+    Scanner dataScan = null;
+    try {
+      in = new FileReader(movieFile);
+      dataScan = new Scanner(in);
+
+      while (true) {
+        try {
+          String record = dataScan.nextLine();
+          String[] values = record.split(",");
+          Movie movie = new Movie();
+          movie.setTitle(values[0]);
+          movie.setGenre(Genre.valueOf(values[1]));
+          movie.setViewCount(Integer.parseInt(values[2]));
+          movieList.add(movie);
+
+        } catch (NoSuchElementException e) {
+          break;
+        }
+      }
+      System.out.printf("영화 %d개를 로딩하였습니다!\n", movieList.size());
+    } catch (IOException e) {
+      System.out.println("영화 데이터를 로딩하는 중에 에러가 발생하였습니다...");
+    } finally {
+      try {
+        dataScan.close();
+      } catch (Exception e) {
+      }
+      try {
+        in.close();
+      } catch (Exception e) {
+      }
+
+    }
+  }
+
+  String name;
+  String ID;
+  String password;
+  Genre favoriteGenre;
+  List<Movie> toWatchList = new ArrayList<>();
+  MovieHandler toWatchHandler = new MovieHandler(toWatchList);
+  List<Movie> watchedList = new Stack<>();
+  MovieHandler watchedHandler = new MovieHandler(watchedList);
+  MovieHandler allMoviesHandler;
+
+  public static void saveMembers() {
+    FileWriter out = null;
+    try {
+      out = new FileWriter(memberFile);
+      StringBuilder toWatch = new StringBuilder();
+      StringBuilder watched = new StringBuilder();
+      for (Member member : memberList) {
+        for (int i = 0; i < member.getToWatchList().size(); i++) {
+          toWatch.append(member.getToWatchList().get(i));
+        }
+        for (int i = 0; i < member.getWatchedList().size(); i++) {
+          watched.append(member.getWatchedList().get(i));
+        }
+
+        String record =
+            String.format("%s,%s,%s,%s,%s", member.getName(), member.getID(), member.getPassword(),
+                member.getFavoriteGenre(), toWatch.toString(), watched.toString());
+        out.write(record);
+      }
+    } catch (IOException e) {
+      System.out.println("회원 데이터를 저장하는 중 오류가 발생하였습니다.");
+    } finally {
+      try {
+        out.close();
+      } catch (IOException e) {
+
+      }
+    }
+  }
+
+  public static void saveMovies() {
+    FileWriter out = null;
+    try {
+      out = new FileWriter(movieFile);
+      for (Movie movie : movieList) {
+        String record =
+            String.format("%s,%s,%d\n", movie.getTitle(), movie.getGenre(), movie.getViewCount());
+        out.write(record);
+      }
+      System.out.printf("%d개의 영화를 저장했습니다.", movieList.size());
+    } catch (IOException e) {
+      System.out.println("영화를 저장하다가 오류가 발생했습니다....");
+    } finally {
+      try {
+        out.close();
+      } catch (IOException e) {
+      }
+    }
+  }
 
   public static void isLoggedOut() throws InterruptedException {
     Screen.bitflixLogo();
@@ -35,7 +139,9 @@ public class CommandProcessor {
         break;
       case "종료":
         System.out.println("프로그램을 종료합니다.");
-        System.exit(0);;
+        saveMovies();
+        saveMembers();
+        System.exit(0);
       default:
         System.out.println("잘못된 명령입니다.");
     }
@@ -55,6 +161,8 @@ public class CommandProcessor {
           break;
         case "종료":
           System.out.println("프로그램을 종료합니다.");
+          saveMovies();
+          saveMembers();
           System.exit(0);
         case "":
           return;
@@ -108,6 +216,8 @@ public class CommandProcessor {
         break;
       case "종료":
         System.out.println("프로그램을 종료합니다.");
+        saveMovies();
+        saveMembers();
         System.exit(0);;
       default:
         System.out.println("잘못된 명령입니다.");

@@ -35,6 +35,7 @@ public class Prompt {
   }
 
   // 프롬프트의 사용이 모두 끝났으면
+  // ㄴ어라ㅣ어나ㅣ러ㅐㄷ겨ㅐㅓㄴㅇ라ㅣㅡㄹ이ㅏㄴ거ㅏㅣㅓ히ㅏㄴㅈ을,ㅣㄴ으라ㅣ뎌ㅗ갸ㅐ뎌개ㅏ워ㅏㅣㄹ누ㅡ,ㅡㄹ,기마현우르ㅡㅈ,ㅡ,ㅡㅏㄴㅇ
   // 이 메서드를 호출하여 System.in 입력 스트림 자원을 해제하도록 한다.
   public static void close() {
     keyboardScan.close();
