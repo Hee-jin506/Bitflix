@@ -81,15 +81,19 @@ public class CommandProcessor {
       StringBuilder watched = new StringBuilder();
       for (Member member : memberList) {
         for (int i = 0; i < member.getToWatchList().size(); i++) {
-          toWatch.append(member.getToWatchList().get(i));
+          if (i != 0)
+            toWatch.append(":");
+          toWatch.append(member.getToWatchList().get(i).getTitle());
         }
         for (int i = 0; i < member.getWatchedList().size(); i++) {
-          watched.append(member.getWatchedList().get(i));
+          if (i != 0)
+            watched.append(":");
+          watched.append(member.getWatchedList().get(i).getTitle());
         }
 
-        String record =
-            String.format("%s,%s,%s,%s,%s", member.getName(), member.getID(), member.getPassword(),
-                member.getFavoriteGenre(), toWatch.toString(), watched.toString());
+        String record = String.format("%s,%s,%s,%s,%s,%s\n", member.getName(), member.getID(),
+            member.getPassword(), member.getFavoriteGenre(), toWatch.toString(),
+            watched.toString());
         out.write(record);
       }
     } catch (IOException e) {
