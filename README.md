@@ -11,7 +11,7 @@
 ## 2020-09-18
 
 ### 기능 추가
-    - `loadMembers()` 작성: Member 데이터를 파일에서 불러오는 메서드 작성
+- `loadMembers()` 작성: Member 데이터를 파일에서 불러오는 메서드 작성
 
 
 ### Tree-shaking
