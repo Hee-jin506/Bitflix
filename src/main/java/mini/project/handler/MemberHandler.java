@@ -47,7 +47,18 @@ public class MemberHandler {
 
     Member member = new Member();
     member.setName(Prompt.inputString("이름? "));
-    member.setID(Prompt.inputString("아이디? "));
+    while (true) {
+      String id = Prompt.inputString("아이디? ");
+      if (id.equals("")) {
+        System.out.println("아이디를 입력해주세요.");
+        continue;
+      }
+      if (findByID(id) == null) {
+        member.setID(id);
+        break;
+      }
+      System.out.println("이미 사용되고 있는 아이디입니다. 다시 입력해주세요.");
+    }
     member.setPassword(Prompt.inputString("비밀번호? "));
     System.out.println("장르 : 로맨스, 액션, 가족, 호러");
     member.setFavoriteGenre(Prompt.inputGenre("좋아하는 장르? "));
@@ -166,6 +177,7 @@ public class MemberHandler {
       String ID = Prompt.inputString("아이디: ");
       if (ID.equals(""))
         return null;
+
       String password = Prompt.inputString("비밀번호: ");
 
       if (findByID(ID) == null) {

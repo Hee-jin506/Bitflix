@@ -74,7 +74,7 @@ public class CommandProcessor {
 
     }
   }
-  
+
   public static void loadMovies() {
     FileReader in = null;
     Scanner dataScan = null;
@@ -126,9 +126,10 @@ public class CommandProcessor {
     FileWriter out = null;
     try {
       out = new FileWriter(memberFile);
-      StringBuilder toWatch = new StringBuilder();
-      StringBuilder watched = new StringBuilder();
+
       for (Member member : memberList) {
+        StringBuilder toWatch = new StringBuilder();
+        StringBuilder watched = new StringBuilder();
         for (int i = 0; i < member.getToWatchList().size(); i++) {
           if (i != 0)
             toWatch.append(":");
@@ -145,8 +146,8 @@ public class CommandProcessor {
             watched.toString());
         out.write(record);
       }
-    } catch (IOException e) {
-      System.out.println("회원 데이터를 저장하는 중 오류가 발생하였습니다.");
+    } catch (Exception e) {
+      System.out.println("회원 저장하는 중 에러 발생" + e.getMessage());
     } finally {
       try {
         out.close();
