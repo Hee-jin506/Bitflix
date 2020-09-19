@@ -20,9 +20,14 @@ public class Member {
   MovieHandler toWatchHandler = new MovieHandler(toWatchList);
   List<Movie> watchedList = new Stack<>();
   MovieHandler watchedHandler = new MovieHandler(watchedList);
-  MovieHandler allMoviesHandler;
 
-
+  public void setToWatchHandler(MovieHandler toWatchHandler) {
+    this.toWatchHandler = toWatchHandler;
+  }
+  
+  public void setWatchedHandler(MovieHandler watchedHandler) {
+    this.watchedHandler = watchedHandler;
+  }
 
   public MovieHandler getWatchedHandler() {
     return watchedHandler;

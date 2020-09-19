@@ -1,4 +1,3 @@
-// - 스크린 클래스 수정
 // - 화면 조합은 스크린에서 할 수 있도록
 // - 의존 객체에게 책임 온전히 지우기
 // - 멤버 파일 로딩 구현
@@ -25,6 +24,7 @@ public class App {
 
   public static void main(String[] args) throws InterruptedException {
     CommandProcessor.loadMovies();
+    CommandProcessor.loadMembers();
     // 로그인한 사용자
     CommandProcessor.loggedInMember = null;
 

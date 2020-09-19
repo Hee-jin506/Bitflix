@@ -22,10 +22,59 @@ public class CommandProcessor {
   public static MemberHandler memberHandler = new MemberHandler(memberList, movieHandler);
   public static Member loggedInMember;
 
-  private static File movieFile = new File("./movie.csv");
-  private static File memberFile = new File("./member.csv");
+  private static File movieFile = new File("./data/movie.csv");
+  private static File memberFile = new File("./data/member.csv");
 
+  public static void loadMembers() {
+    FileReader in = null;
+    Scanner dataScan = null;
+    try {
+      in = new FileReader(memberFile);
+      dataScan = new Scanner(in);
 
+      while (true) {
+        try {
+          String record = dataScan.nextLine();
+          String[] values = record.split(",");
+          Member member = new Member();
+          member.setName(values[0]);
+          member.setID(values[1]);
+          member.setPassword(values[2]);
+          member.setFavoriteGenre(Genre.valueOf(values[3]));
+          String[] toWatchs = values[4].split(":");
+          for (String title : toWatchs) {
+            member.getToWatchList().add(movieHandler.findByTitle(title));
+          }
+          member.setToWatchHandler(new MovieHandler(member.getToWatchList()));
+          if (values.length == 6) {
+            String[] watcheds = values[5].split(":");
+            for (String title : watcheds) {
+              member.getWatchedList().add(movieHandler.findByTitle(title));
+            }
+            member.setWatchedHandler(new MovieHandler(member.getWatchedList()));
+          }
+          memberList.add(member);
+
+        } catch (NoSuchElementException e) {
+          break;
+        }
+      }
+      System.out.printf("회원 %d명을 로딩하였습니다!\n", memberList.size());
+    } catch (IOException e) {
+      System.out.println("회원 데이터를 로딩하는 중에 에러가 발생하였습니다...");
+    } finally {
+      try {
+        dataScan.close();
+      } catch (Exception e) {
+      }
+      try {
+        in.close();
+      } catch (Exception e) {
+      }
+
+    }
+  }
+  
   public static void loadMovies() {
     FileReader in = null;
     Scanner dataScan = null;

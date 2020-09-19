@@ -49,14 +49,6 @@ public class MovieHandler {
     movieList.add(movie);
   }
 
-  public void add(String title) {
-    Movie movie = findByTitle(title);
-    if (movie == null) {
-      return;
-    }
-    movieList.add(movie);
-  }
-
   public void list() {
     // System.out.println("[영화 목록]");
     Movie[] movies;
