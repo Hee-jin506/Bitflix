@@ -24,7 +24,7 @@ public class Member {
   public void setToWatchHandler(MovieHandler toWatchHandler) {
     this.toWatchHandler = toWatchHandler;
   }
-  
+
   public void setWatchedHandler(MovieHandler watchedHandler) {
     this.watchedHandler = watchedHandler;
   }
@@ -165,6 +165,29 @@ public class Member {
 
     }
 
+  }
+
+  public static Member valueOfCsv(String record, MovieHandler movieHandler) {
+    // TODO Auto-generated method stub
+    String[] values = record.split(",");
+    Member member = new Member();
+    member.setName(values[0]);
+    member.setID(values[1]);
+    member.setPassword(values[2]);
+    member.setFavoriteGenre(Genre.valueOf(values[3]));
+    String[] toWatchs = values[4].split(":");
+    for (String title : toWatchs) {
+      member.getToWatchList().add(movieHandler.findByTitle(title));
+    }
+    member.setToWatchHandler(new MovieHandler(member.getToWatchList()));
+    if (values.length == 6) {
+      String[] watcheds = values[5].split(":");
+      for (String title : watcheds) {
+        member.getWatchedList().add(movieHandler.findByTitle(title));
+      }
+      member.setWatchedHandler(new MovieHandler(member.getWatchedList()));
+    }
+    return member;
   }
 }
 
