@@ -35,8 +35,29 @@ public class CommandProcessor {
       while (true) {
         try {
           String record = dataScan.nextLine();
-         
-          memberList.add(Member.valueOfCsv(record, movieHandler));
+          String[] values = record.split(",");
+          Member member = new Member();
+          member.setName(values[0]);
+          member.setID(values[1]);
+          member.setPassword(values[2]);
+          member.setFavoriteGenre(Genre.valueOf(values[3]));
+          String[] toWatchs;
+          if (!values[4].equals(" ")) {
+            toWatchs = values[4].split(":");
+            for (String title : toWatchs) {
+              member.getToWatchList().add(movieHandler.findByTitle(title));
+            }
+            member.setToWatchHandler(new MovieHandler(member.getToWatchList()));
+          }
+          String[] watcheds;
+          if (!values[5].equals(" ")) {
+            watcheds = values[5].split(":");
+            for (String title : watcheds) {
+              member.getWatchedList().add(movieHandler.findByTitle(title));
+            }
+            member.setWatchedHandler(new MovieHandler(member.getWatchedList()));
+          }
+          memberList.add(member);
 
         } catch (NoSuchElementException e) {
           break;
@@ -113,17 +134,23 @@ public class CommandProcessor {
       for (Member member : memberList) {
         StringBuilder toWatch = new StringBuilder();
         StringBuilder watched = new StringBuilder();
+
         for (int i = 0; i < member.getToWatchList().size(); i++) {
           if (i != 0)
             toWatch.append(":");
           toWatch.append(member.getToWatchList().get(i).getTitle());
+        }
+        if (member.getToWatchList().size() == 0) {
+          toWatch.append(" ");
         }
         for (int i = 0; i < member.getWatchedList().size(); i++) {
           if (i != 0)
             watched.append(":");
           watched.append(member.getWatchedList().get(i).getTitle());
         }
-
+        if (member.getWatchedList().size() == 0) {
+          watched.append(" ");
+        }
         String record = String.format("%s,%s,%s,%s,%s,%s\n", member.getName(), member.getID(),
             member.getPassword(), member.getFavoriteGenre(), toWatch.toString(),
             watched.toString());
@@ -260,4 +287,6 @@ public class CommandProcessor {
         System.out.println("잘못된 명령입니다.");
     }
   }
+  
+  
 }
