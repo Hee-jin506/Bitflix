@@ -63,3 +63,22 @@ data/member.csv
 ### 느낀점
 - 프로그램을 실행할 때에는 정말 다양한 가능성이 존재하고, 디버그에는 끝이 없음을 알았다.
 - split() 메서드가 빈문자열을 배열에 포함시키지 않음을 알았다. 메서드를 사용할 때에는 잘 알고 써야함을 깨달았다.
+
+## 2020-09-21
+
+### Refactoring
+
+- CommandProcessor
+  - saveMovies() : 메서드 추출 - Movie 클래스의 인스턴스 메서드 toCsvString 정의
+  - loadMovies() : 메서드 추출 - Movie 클래스의 스태틱 메서드 valueOfCsv 정의
+  - saveMembers() : 메서드 추출 - Member객체의 정보를 csv파일의 한 줄로 변환하는 Member 클래스의 인스턴스 메서드 toCsvString 정의
+  - loadMembers() : 메서드 추출 - Member 클래스의 스태틱 메서드 valueOfCsv 정의
+  - loggedOut() : 화면을 조합하는 코드를 추출하여 viewLoggedOutScreen() 스태틱 메서드를 정의했다.
+  - loggedIn() : 화면을 조합하는 코드를 추출하여 viewLoggedInScreen() 스태틱 메서드를 정의했다.
+
+- MovieHandler
+  - list()에서 호출하던 Screen 클래스의 viewMovies() 메서드를 MovieHandler 안으로 넣었다.
+
+### 느낀점
+
+- 프로젝트의 전체적인 설계에서 어떤 것이 정답인지 아직은 잘 모르겠다. 조금 더 설계 기법에 지식이 생기면, 그 때 개선해보는 것도 나쁘지 않을 것 같다.
