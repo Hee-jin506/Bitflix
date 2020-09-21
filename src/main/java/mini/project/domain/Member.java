@@ -168,26 +168,55 @@ public class Member {
   }
 
   public static Member valueOfCsv(String record, MovieHandler movieHandler) {
-    // TODO Auto-generated method stub
     String[] values = record.split(",");
     Member member = new Member();
     member.setName(values[0]);
     member.setID(values[1]);
     member.setPassword(values[2]);
     member.setFavoriteGenre(Genre.valueOf(values[3]));
-    String[] toWatchs = values[4].split(":");
-    for (String title : toWatchs) {
-      member.getToWatchList().add(movieHandler.findByTitle(title));
+    String[] toWatchs;
+    if (!values[4].equals(" ")) {
+      toWatchs = values[4].split(":");
+      for (String title : toWatchs) {
+        member.getToWatchList().add(movieHandler.findByTitle(title));
+      }
+      member.setToWatchHandler(new MovieHandler(member.getToWatchList()));
     }
-    member.setToWatchHandler(new MovieHandler(member.getToWatchList()));
-    if (values.length == 6) {
-      String[] watcheds = values[5].split(":");
+    String[] watcheds;
+    if (!values[5].equals(" ")) {
+      watcheds = values[5].split(":");
       for (String title : watcheds) {
         member.getWatchedList().add(movieHandler.findByTitle(title));
       }
       member.setWatchedHandler(new MovieHandler(member.getWatchedList()));
     }
+
     return member;
   }
+
+  public String toCsvString() {
+    StringBuilder toWatch = new StringBuilder();
+    StringBuilder watched = new StringBuilder();
+
+    for (int i = 0; i < getToWatchList().size(); i++) {
+      if (i != 0)
+        toWatch.append(":");
+      toWatch.append(getToWatchList().get(i).getTitle());
+    }
+    if (getToWatchList().size() == 0) {
+      toWatch.append(" ");
+    }
+    for (int i = 0; i < getWatchedList().size(); i++) {
+      if (i != 0)
+        watched.append(":");
+      watched.append(getWatchedList().get(i).getTitle());
+    }
+    if (getWatchedList().size() == 0) {
+      watched.append(" ");
+    }
+    return String.format("%s,%s,%s,%s,%s,%s\n", getName(), getID(), getPassword(),
+        getFavoriteGenre(), toWatch.toString(), watched.toString());
+  }
+
 }
 

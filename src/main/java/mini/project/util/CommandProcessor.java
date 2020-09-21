@@ -34,9 +34,7 @@ public class CommandProcessor {
 
       while (true) {
         try {
-          String record = dataScan.nextLine();
-          Member member = Member.valueOfCsv(record, movieHandler);
-          memberList.add(member);
+          memberList.add(Member.valueOfCsv(dataScan.nextLine(), movieHandler));
 
         } catch (NoSuchElementException e) {
           break;
@@ -67,13 +65,7 @@ public class CommandProcessor {
 
       while (true) {
         try {
-          String record = dataScan.nextLine();
-          String[] values = record.split(",");
-          Movie movie = new Movie();
-          movie.setTitle(values[0]);
-          movie.setGenre(Genre.valueOf(values[1]));
-          movie.setViewCount(Integer.parseInt(values[2]));
-          movieList.add(movie);
+          movieList.add(Movie.valueOfCsv(dataScan.nextLine()));
 
         } catch (NoSuchElementException e) {
           break;
@@ -111,23 +103,7 @@ public class CommandProcessor {
       out = new FileWriter(memberFile);
 
       for (Member member : memberList) {
-        StringBuilder toWatch = new StringBuilder();
-        StringBuilder watched = new StringBuilder();
-        for (int i = 0; i < member.getToWatchList().size(); i++) {
-          if (i != 0)
-            toWatch.append(":");
-          toWatch.append(member.getToWatchList().get(i).getTitle());
-        }
-        for (int i = 0; i < member.getWatchedList().size(); i++) {
-          if (i != 0)
-            watched.append(":");
-          watched.append(member.getWatchedList().get(i).getTitle());
-        }
-
-        String record = String.format("%s,%s,%s,%s,%s,%s\n", member.getName(), member.getID(),
-            member.getPassword(), member.getFavoriteGenre(), toWatch.toString(),
-            watched.toString());
-        out.write(record);
+        out.write(member.toCsvString());
       }
     } catch (Exception e) {
       System.out.println("회원 저장하는 중 에러 발생" + e.getMessage());
@@ -145,9 +121,7 @@ public class CommandProcessor {
     try {
       out = new FileWriter(movieFile);
       for (Movie movie : movieList) {
-        String record =
-            String.format("%s,%s,%d\n", movie.getTitle(), movie.getGenre(), movie.getViewCount());
-        out.write(record);
+        out.write(movie.toCsvString());
       }
       System.out.printf("%d개의 영화를 저장했습니다.", movieList.size());
     } catch (IOException e) {
@@ -161,9 +135,7 @@ public class CommandProcessor {
   }
 
   public static void isLoggedOut() throws InterruptedException {
-    Screen.bitflixLogo();
-    movieHandler.printBest();
-    Screen.viewMenu(Screen.BEFORE_LOGIN_PAGE);
+    viewLoggedOutScreen();
     switch (Prompt.inputString("명령> ")) {
       case "회원가입":
         memberHandler.add();
@@ -183,6 +155,7 @@ public class CommandProcessor {
         System.out.println("잘못된 명령입니다.");
     }
   }
+
 
 
   static void isManager() {
@@ -210,11 +183,7 @@ public class CommandProcessor {
   }
 
   public static void isLoggedIn() throws InterruptedException {
-    Screen.bitflixLogo();
-    movieHandler.printGenre(loggedInMember.getFavoriteGenre());
-    movieHandler.printBest();
-    System.out.println(loggedInMember.getName() + "님 안녕하세요!");
-    Screen.viewMenu(Screen.AFTER_LOGIN_PAGE);
+    viewLoggedInScreen();
 
     switch (Prompt.inputString("명령> ")) {
       case "로그아웃":
@@ -259,5 +228,19 @@ public class CommandProcessor {
       default:
         System.out.println("잘못된 명령입니다.");
     }
+  }
+
+  private static void viewLoggedOutScreen() throws InterruptedException {
+    Screen.bitflixLogo();
+    movieHandler.printBest();
+    Screen.viewMenu(Screen.BEFORE_LOGIN_PAGE);
+  }
+
+  private static void viewLoggedInScreen() throws InterruptedException {
+    Screen.bitflixLogo();
+    movieHandler.printGenre(loggedInMember.getFavoriteGenre());
+    movieHandler.printBest();
+    System.out.println(loggedInMember.getName() + "님 안녕하세요!");
+    Screen.viewMenu(Screen.AFTER_LOGIN_PAGE);
   }
 }

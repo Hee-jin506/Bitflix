@@ -1,7 +1,6 @@
 package mini.project.util;
 
 import mini.project.domain.Genre;
-import mini.project.domain.Movie;
 
 public class Screen {
 
@@ -10,20 +9,6 @@ public class Screen {
   public static final int AFTER_LOGIN_PAGE = 2;
   public static final int MEMBER_MANAGE_PAGE = 3;
   public static final int MOVIE_MANAGE_PAGE = 4;
-
-
-
-  public static void viewMovies(Movie[] movies) {
-    for (int i = 0; i < movies.length; i++) {
-      if ((i % 5) == 0 && i != 0) {
-        if (Prompt.inputString(String.format("%10s\t:", "")).equalsIgnoreCase("q"))
-          break;
-      }
-      System.out.printf("%10s\t%d. %s\n", "", i + 1, movies[i].getTitle());
-
-    }
-    System.out.println();
-  }
 
 
 

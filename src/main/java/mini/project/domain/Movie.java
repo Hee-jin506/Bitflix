@@ -11,7 +11,7 @@ public class Movie {
   }
 
   public Movie() {
-    
+
   }
 
   public String getTitle() {
@@ -38,4 +38,16 @@ public class Movie {
     this.viewCount = viewCount;
   }
 
+  public static Movie valueOfCsv(String record) {
+    String[] values = record.split(",");
+    Movie movie = new Movie();
+    movie.setTitle(values[0]);
+    movie.setGenre(Genre.valueOf(values[1]));
+    movie.setViewCount(Integer.parseInt(values[2]));
+    return movie;
+  }
+
+  public String toCsvString() {
+    return String.format("%s,%s,%d\n", getTitle(), getGenre(), getViewCount());
+  }
 }

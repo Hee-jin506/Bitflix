@@ -57,7 +57,7 @@ public class MovieHandler {
     for (int i = 0; iterator.hasNext(); i++) {
       movies[i] = iterator.next();
     }
-    Screen.viewMovies(movies);
+    viewMovies(movies);
 
     // Iterator<Movie> iterator = movieList.iterator();
     // while (iterator.hasNext()) {
@@ -65,6 +65,18 @@ public class MovieHandler {
     // System.out.printf("%s, %s, %s\n", movie.getTitle(), movie.getGenre(), movie.getViewCount());
     // }
 
+  }
+
+  public static void viewMovies(Movie[] movies) {
+    for (int i = 0; i < movies.length; i++) {
+      if ((i % 5) == 0 && i != 0) {
+        if (Prompt.inputString(String.format("%10s\t:", "")).equalsIgnoreCase("q"))
+          break;
+      }
+      System.out.printf("%10s\t%d. %s\n", "", i + 1, movies[i].getTitle());
+
+    }
+    System.out.println();
   }
 
   public void update() {
@@ -156,9 +168,11 @@ public class MovieHandler {
 
   }
 
+
+
   public void printBest() {
-    List<Movie> bestMovieList = (List<Movie>)((ArrayList<Movie>)movieList).clone();
-    
+    List<Movie> bestMovieList = (List<Movie>) ((ArrayList<Movie>) movieList).clone();
+
     for (int i = 0; i < movieList.size(); i++) {
       for (int j = 0; j < bestMovieList.size() - i - 1; j++) {
         if (bestMovieList.get(i).getViewCount() < bestMovieList.get(j + 1).getViewCount()) {
